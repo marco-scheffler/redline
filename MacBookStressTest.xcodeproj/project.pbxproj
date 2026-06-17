@@ -1,0 +1,436 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0612309B4E852D56C6F098C9 /* CPUCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9470D75ECD1EF5BE56C95C /* CPUCardView.swift */; };
+		0AC3098C6A204F2711F56E12 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7D845A02DD9F79CAADDE11 /* AppModel.swift */; };
+		0FE861373CAAF9DA438E5D62 /* MonitorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE50ADC95127FF6D09F2E18 /* MonitorCardView.swift */; };
+		160C221135D9469625FAD5BA /* MemoryStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37392BF0050EDC2E009CA977 /* MemoryStressEngine.swift */; };
+		1660D804AECAB23F84011C77 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8CF9ED57C41A070E4A70B /* Controls.swift */; };
+		1CFD1AA3B5DF611342B102D7 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 43E62A4A27D8E075FC81239B /* Shaders.metal */; };
+		22C0223C469944940F8466F9 /* MemoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8592A9F402FD62FF48FCDBF8 /* MemoryCardView.swift */; };
+		2995BBFBF58972EB8A6C5A5E /* SystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C8E0F25A83CBDC8CBC2E42 /* SystemInfo.swift */; };
+		34E9F3C54611C1071664FEE0 /* CPUStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27481DBFC8521742C240E610 /* CPUStressEngine.swift */; };
+		3AE53481C8BCCF137D79C86E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8142844618D09C91FAE6E396 /* HeaderView.swift */; };
+		3BE2DD2D14844364A552781A /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662162DE07E539EFF19F6F33 /* VisualEffectView.swift */; };
+		4B4A59C9818D854C7CE70AA0 /* DiskStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B0FBB1D7D943CAB4E18F50 /* DiskStressEngine.swift */; };
+		59B0F8E237D0C1528AB4634A /* SystemMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC39182618448A1D97AE9E5 /* SystemMonitor.swift */; };
+		6B9954752D84ED23B5DA5B9C /* StressTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F4C311E56D3AD63CE9A13B /* StressTypes.swift */; };
+		7F2C0102AFB7845D8CF5C71E /* DiskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F69860AE12F629D220F8C /* DiskCardView.swift */; };
+		86B9CBED0F2EDF4F476D916D /* GPUStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB793EDFF719F934996D62 /* GPUStressEngine.swift */; };
+		969D6F156F857524DEA96713 /* GPUCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B18345D31F4BD8E8528F9 /* GPUCardView.swift */; };
+		B04C7DAC9DA98285C0315DC7 /* MacBookStressTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5365D975BF6FE85446EF39 /* MacBookStressTestApp.swift */; };
+		C603847E58B8A4310303D0D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97054950A1FF86E57A43B902 /* ContentView.swift */; };
+		C64AE6BB4419301E831A5818 /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FF8439B7073D8C1BFFA391 /* IconTile.swift */; };
+		CD36DAF6BFC487A77C5E2DF2 /* ActivityLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB56FDC94C701C9E5CDDC305 /* ActivityLogView.swift */; };
+		E02A17B3750507E428802BB2 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FB679C4E57BBCDC689299 /* Theme.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		005B18345D31F4BD8E8528F9 /* GPUCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUCardView.swift; sourceTree = "<group>"; };
+		0E9470D75ECD1EF5BE56C95C /* CPUCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUCardView.swift; sourceTree = "<group>"; };
+		15B0FBB1D7D943CAB4E18F50 /* DiskStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStressEngine.swift; sourceTree = "<group>"; };
+		27481DBFC8521742C240E610 /* CPUStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUStressEngine.swift; sourceTree = "<group>"; };
+		32C8E0F25A83CBDC8CBC2E42 /* SystemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemInfo.swift; sourceTree = "<group>"; };
+		37392BF0050EDC2E009CA977 /* MemoryStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryStressEngine.swift; sourceTree = "<group>"; };
+		3B7D845A02DD9F79CAADDE11 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		43E62A4A27D8E075FC81239B /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		4DE50ADC95127FF6D09F2E18 /* MonitorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCardView.swift; sourceTree = "<group>"; };
+		51F4C311E56D3AD63CE9A13B /* StressTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StressTypes.swift; sourceTree = "<group>"; };
+		5F5365D975BF6FE85446EF39 /* MacBookStressTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBookStressTestApp.swift; sourceTree = "<group>"; };
+		662162DE07E539EFF19F6F33 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		6EFB793EDFF719F934996D62 /* GPUStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUStressEngine.swift; sourceTree = "<group>"; };
+		8142844618D09C91FAE6E396 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		83077B678937C3653ED849DF /* MacBookStressTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacBookStressTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8592A9F402FD62FF48FCDBF8 /* MemoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCardView.swift; sourceTree = "<group>"; };
+		97054950A1FF86E57A43B902 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A84F69860AE12F629D220F8C /* DiskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCardView.swift; sourceTree = "<group>"; };
+		AF1FB679C4E57BBCDC689299 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		BCC39182618448A1D97AE9E5 /* SystemMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitor.swift; sourceTree = "<group>"; };
+		D4C8CF9ED57C41A070E4A70B /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		D6FF8439B7073D8C1BFFA391 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
+		FB56FDC94C701C9E5CDDC305 /* ActivityLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0409849E2E760BE4D89EB677 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				32C8E0F25A83CBDC8CBC2E42 /* SystemInfo.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		1C2071C4EE4C6634DBA0012A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FB56FDC94C701C9E5CDDC305 /* ActivityLogView.swift */,
+				97054950A1FF86E57A43B902 /* ContentView.swift */,
+				D4C8CF9ED57C41A070E4A70B /* Controls.swift */,
+				0E9470D75ECD1EF5BE56C95C /* CPUCardView.swift */,
+				A84F69860AE12F629D220F8C /* DiskCardView.swift */,
+				005B18345D31F4BD8E8528F9 /* GPUCardView.swift */,
+				8142844618D09C91FAE6E396 /* HeaderView.swift */,
+				D6FF8439B7073D8C1BFFA391 /* IconTile.swift */,
+				8592A9F402FD62FF48FCDBF8 /* MemoryCardView.swift */,
+				4DE50ADC95127FF6D09F2E18 /* MonitorCardView.swift */,
+				AF1FB679C4E57BBCDC689299 /* Theme.swift */,
+				662162DE07E539EFF19F6F33 /* VisualEffectView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2EE61C864672D2EBD9E6A84B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83077B678937C3653ED849DF /* MacBookStressTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F7DED6FDDF261A1B88D17DD = {
+			isa = PBXGroup;
+			children = (
+				854E75F1A601E064D0DB369E /* MacBookStressTest */,
+				2EE61C864672D2EBD9E6A84B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6D90DB3D36851747A129993B /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				BCC39182618448A1D97AE9E5 /* SystemMonitor.swift */,
+			);
+			path = Monitor;
+			sourceTree = "<group>";
+		};
+		70D76244E5CAD8CEDF4AEB78 /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				27481DBFC8521742C240E610 /* CPUStressEngine.swift */,
+				15B0FBB1D7D943CAB4E18F50 /* DiskStressEngine.swift */,
+				6EFB793EDFF719F934996D62 /* GPUStressEngine.swift */,
+				37392BF0050EDC2E009CA977 /* MemoryStressEngine.swift */,
+				51F4C311E56D3AD63CE9A13B /* StressTypes.swift */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
+		854E75F1A601E064D0DB369E /* MacBookStressTest */ = {
+			isa = PBXGroup;
+			children = (
+				EF791BC10679AD9B82735A3A /* App */,
+				70D76244E5CAD8CEDF4AEB78 /* Engines */,
+				6D90DB3D36851747A129993B /* Monitor */,
+				A57FAF05D25806631AD044F1 /* Resources */,
+				0409849E2E760BE4D89EB677 /* System */,
+				1C2071C4EE4C6634DBA0012A /* Views */,
+			);
+			path = MacBookStressTest;
+			sourceTree = "<group>";
+		};
+		A57FAF05D25806631AD044F1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				43E62A4A27D8E075FC81239B /* Shaders.metal */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EF791BC10679AD9B82735A3A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3B7D845A02DD9F79CAADDE11 /* AppModel.swift */,
+				5F5365D975BF6FE85446EF39 /* MacBookStressTestApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		90E46CD137C5BBAD9A8C5D59 /* MacBookStressTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D951EFA9EB817F92882BE91B /* Build configuration list for PBXNativeTarget "MacBookStressTest" */;
+			buildPhases = (
+				22A4169D26C3C87604A629A6 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacBookStressTest;
+			packageProductDependencies = (
+			);
+			productName = MacBookStressTest;
+			productReference = 83077B678937C3653ED849DF /* MacBookStressTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0178E081F7F03AF3541D1DFB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					90E46CD137C5BBAD9A8C5D59 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = C30355432DC8DFB79109D476 /* Build configuration list for PBXProject "MacBookStressTest" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 2F7DED6FDDF261A1B88D17DD;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2EE61C864672D2EBD9E6A84B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				90E46CD137C5BBAD9A8C5D59 /* MacBookStressTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		22A4169D26C3C87604A629A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD36DAF6BFC487A77C5E2DF2 /* ActivityLogView.swift in Sources */,
+				0AC3098C6A204F2711F56E12 /* AppModel.swift in Sources */,
+				0612309B4E852D56C6F098C9 /* CPUCardView.swift in Sources */,
+				34E9F3C54611C1071664FEE0 /* CPUStressEngine.swift in Sources */,
+				C603847E58B8A4310303D0D8 /* ContentView.swift in Sources */,
+				1660D804AECAB23F84011C77 /* Controls.swift in Sources */,
+				7F2C0102AFB7845D8CF5C71E /* DiskCardView.swift in Sources */,
+				4B4A59C9818D854C7CE70AA0 /* DiskStressEngine.swift in Sources */,
+				969D6F156F857524DEA96713 /* GPUCardView.swift in Sources */,
+				86B9CBED0F2EDF4F476D916D /* GPUStressEngine.swift in Sources */,
+				3AE53481C8BCCF137D79C86E /* HeaderView.swift in Sources */,
+				C64AE6BB4419301E831A5818 /* IconTile.swift in Sources */,
+				B04C7DAC9DA98285C0315DC7 /* MacBookStressTestApp.swift in Sources */,
+				22C0223C469944940F8466F9 /* MemoryCardView.swift in Sources */,
+				160C221135D9469625FAD5BA /* MemoryStressEngine.swift in Sources */,
+				0FE861373CAAF9DA438E5D62 /* MonitorCardView.swift in Sources */,
+				1CFD1AA3B5DF611342B102D7 /* Shaders.metal in Sources */,
+				6B9954752D84ED23B5DA5B9C /* StressTypes.swift in Sources */,
+				2995BBFBF58972EB8A6C5A5E /* SystemInfo.swift in Sources */,
+				59B0F8E237D0C1528AB4634A /* SystemMonitor.swift in Sources */,
+				E02A17B3750507E428802BB2 /* Theme.swift in Sources */,
+				3BE2DD2D14844364A552781A /* VisualEffectView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		35C988C5D07D25F6ED738BEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AA207A168892737497025EB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weber.macbookstresstest;
+				PRODUCT_NAME = "MacBook Stress Test";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BE8731D2D7D2CDCE87849D97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weber.macbookstresstest;
+				PRODUCT_NAME = "MacBook Stress Test";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FA1CB110A6C0E0E4C8DC08C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C30355432DC8DFB79109D476 /* Build configuration list for PBXProject "MacBookStressTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA1CB110A6C0E0E4C8DC08C2 /* Debug */,
+				35C988C5D07D25F6ED738BEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D951EFA9EB817F92882BE91B /* Build configuration list for PBXNativeTarget "MacBookStressTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA207A168892737497025EB1 /* Debug */,
+				BE8731D2D7D2CDCE87849D97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0178E081F7F03AF3541D1DFB /* Project object */;
+}
