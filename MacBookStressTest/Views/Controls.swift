@@ -1,23 +1,21 @@
 import SwiftUI
 
-/// Native Start / Stop button pair, shared by every resource card.
+/// A single Start/Stop toggle button, shared by every resource card.
+/// Shows a green "Start" while idle and a red "Stop" while running.
 struct StressButtons: View {
     let isRunning: Bool
     let start: () -> Void
     let stop: () -> Void
 
     var body: some View {
-        HStack(spacing: 8) {
-            Button("Start", action: start)
-                .buttonStyle(.borderedProminent)
-                .tint(Accent.go)
-                .disabled(isRunning)
-            Button("Stop", action: stop)
-                .buttonStyle(.bordered)
-                .tint(Accent.stop)
-                .disabled(!isRunning)
+        Button(isRunning ? "Stop" : "Start") {
+            if isRunning { stop() } else { start() }
         }
+        .buttonStyle(.borderedProminent)
+        .tint(isRunning ? Accent.stop : Accent.go)
         .controlSize(.large)
+        .frame(minWidth: 62)
+        .animation(.easeInOut(duration: 0.15), value: isRunning)
     }
 }
 
