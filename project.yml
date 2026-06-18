@@ -25,6 +25,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.weber.macbookstresstest
         GENERATE_INFOPLIST_FILE: YES
         MACOSX_DEPLOYMENT_TARGET: "14.0"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.utilities"
         INFOPLIST_KEY_NSPrincipalClass: NSApplication
         ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO

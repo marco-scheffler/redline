@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0612309B4E852D56C6F098C9 /* CPUCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9470D75ECD1EF5BE56C95C /* CPUCardView.swift */; };
 		0AC3098C6A204F2711F56E12 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7D845A02DD9F79CAADDE11 /* AppModel.swift */; };
+		0ECA672BA5FE7610F5CA76DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D523595B939C0CD7669E3B11 /* Assets.xcassets */; };
 		0FE861373CAAF9DA438E5D62 /* MonitorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE50ADC95127FF6D09F2E18 /* MonitorCardView.swift */; };
 		160C221135D9469625FAD5BA /* MemoryStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37392BF0050EDC2E009CA977 /* MemoryStressEngine.swift */; };
 		1660D804AECAB23F84011C77 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8CF9ED57C41A070E4A70B /* Controls.swift */; };
@@ -53,6 +54,7 @@
 		AF1FB679C4E57BBCDC689299 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		BCC39182618448A1D97AE9E5 /* SystemMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitor.swift; sourceTree = "<group>"; };
 		D4C8CF9ED57C41A070E4A70B /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		D523595B939C0CD7669E3B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6FF8439B7073D8C1BFFA391 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
 		FB56FDC94C701C9E5CDDC305 /* ActivityLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +126,7 @@
 		854E75F1A601E064D0DB369E /* MacBookStressTest */ = {
 			isa = PBXGroup;
 			children = (
+				D523595B939C0CD7669E3B11 /* Assets.xcassets */,
 				EF791BC10679AD9B82735A3A /* App */,
 				70D76244E5CAD8CEDF4AEB78 /* Engines */,
 				6D90DB3D36851747A129993B /* Monitor */,
@@ -159,6 +162,7 @@
 			buildConfigurationList = D951EFA9EB817F92882BE91B /* Build configuration list for PBXNativeTarget "MacBookStressTest" */;
 			buildPhases = (
 				22A4169D26C3C87604A629A6 /* Sources */,
+				56F11AA28AD937DCC6ECC0AE /* Resources */,
 			);
 			buildRules = (
 			);
@@ -204,6 +208,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		56F11AA28AD937DCC6ECC0AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ECA672BA5FE7610F5CA76DB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		22A4169D26C3C87604A629A6 /* Sources */ = {
