@@ -20,20 +20,41 @@ struct ContentView: View {
 
             Divider()
 
-            HStack(spacing: 10) {
-                Button("Run All Tests", action: model.startAll)
-                    .buttonStyle(.borderedProminent)
-                    .tint(Accent.cpu)
-                Button("Stop All", action: model.stopAll)
-                    .buttonStyle(.bordered)
-                    .tint(Accent.stop)
-                Spacer()
-            }
-            .controlSize(.large)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 14)
+            BottomBar(cpu: model.cpu, gpu: model.gpu,
+                      memory: model.memory, disk: model.disk,
+                      startAll: model.startAll, stopAll: model.stopAll)
         }
         .background(VisualEffectView().ignoresSafeArea())
         .frame(minWidth: 720, minHeight: 820)
+    }
+}
+
+/// Bottom action bar: a single toggle that runs every test while idle and
+/// stops every running test once anything is active.
+private struct BottomBar: View {
+    @ObservedObject var cpu: CPUStressEngine
+    @ObservedObject var gpu: GPUStressEngine
+    @ObservedObject var memory: MemoryStressEngine
+    @ObservedObject var disk: DiskStressEngine
+    let startAll: () -> Void
+    let stopAll: () -> Void
+
+    private var anyRunning: Bool {
+        cpu.isRunning || gpu.isRunning || memory.isRunning || disk.isRunning
+    }
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Button(anyRunning ? "Stop All" : "Run All Tests") {
+                if anyRunning { stopAll() } else { startAll() }
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(anyRunning ? Accent.stop : Accent.cpu)
+            .animation(.easeInOut(duration: 0.15), value: anyRunning)
+            Spacer()
+        }
+        .controlSize(.large)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 14)
     }
 }
