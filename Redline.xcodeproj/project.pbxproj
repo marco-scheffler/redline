@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B0EE030ADC45B855CA166CA /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4266B0FD6FBEECAE1E79B8 /* AppModel.swift */; };
+		0CE28D27A63E09E2B105F83F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B886B9BF9C937CB5492853A /* HeaderView.swift */; };
+		116357B7483C2907BB4B3311 /* MemoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BC8C75B59C25870E84259D /* MemoryCardView.swift */; };
+		11D98BBD3B29D0FE8A1208B4 /* MemoryStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EC9E8E777627857E105E5 /* MemoryStressEngine.swift */; };
+		20AB815074BDF2F22EA8D9C3 /* DiskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D091941512A15806E8CC9A /* DiskCardView.swift */; };
+		247B95FEA223C524A8E244DB /* CPUCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8809C62B036E894DC8D708E /* CPUCardView.swift */; };
+		274132D1B3EF379C8E48727C /* SystemMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2A0017F9C0D1C5185D7CE8 /* SystemMonitor.swift */; };
+		29BE8482CF54D1D0BCE8AA97 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236B4E52C99C20F47C51681 /* Theme.swift */; };
+		42EB4B86E438105859B4A880 /* StressTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A0EDFDC2CD590E9BFFEEBD /* StressTypes.swift */; };
+		432DC3443CC8AD350B994E4F /* ActivityLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23CAC28DC651A1072FFA4FB /* ActivityLogView.swift */; };
+		4840A8AD400EB97910615DB8 /* MonitorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0595AB49D0EF7381493F42C /* MonitorCardView.swift */; };
+		544EDCD5585988D3FDD57A5C /* DiskStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E8E3DD1EE11B733AF4FD2 /* DiskStressEngine.swift */; };
+		57790F357FBE4AD22E89A877 /* RedlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C065B7E1CF678C3D2F83D59D /* RedlineApp.swift */; };
+		59DA64CA09A38C87235B60B2 /* GPUStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEC1613358AC5203DF72946 /* GPUStressEngine.swift */; };
+		65F7F39BA86D2B04ECF41F2C /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4616691C3DDDDE9B813EBA3 /* IconTile.swift */; };
+		7833B337408155905D975A47 /* CPUStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE14651EFE9E2FEA2E6C147 /* CPUStressEngine.swift */; };
+		99FB57D935E3DE69B9116D06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E97DF152F0FDB5FCE45AF461 /* Assets.xcassets */; };
+		A74F170992637EB34E77A942 /* GPUCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC808502A0EC57A8AD29715 /* GPUCardView.swift */; };
+		B45CA5D3EF5F66EF840B9AC6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60FF8FA8646935761833BC /* VisualEffectView.swift */; };
+		C6CDDDB29E85E9DB6116A8C5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD3EAE60E879FF9EA91937F /* ContentView.swift */; };
+		CE4CF5CD53EDC48F20841703 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9D706DD7125F4584463F1762 /* Shaders.metal */; };
+		CECBF6679DD0DFBEFFC6DDD2 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDBA1F64E899C2FC412FA2 /* Controls.swift */; };
+		D0AD78FBD73C7F0AAA84735E /* SystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AC4AC39BC913E4A62EC013 /* SystemInfo.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		02BC8C75B59C25870E84259D /* MemoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCardView.swift; sourceTree = "<group>"; };
+		120E8E3DD1EE11B733AF4FD2 /* DiskStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStressEngine.swift; sourceTree = "<group>"; };
+		2A60FF8FA8646935761833BC /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		2B886B9BF9C937CB5492853A /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		5B4266B0FD6FBEECAE1E79B8 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		778EC9E8E777627857E105E5 /* MemoryStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryStressEngine.swift; sourceTree = "<group>"; };
+		77E369CE6531396BD0644322 /* Redline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Redline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BD3EAE60E879FF9EA91937F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		80EDBA1F64E899C2FC412FA2 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		92D091941512A15806E8CC9A /* DiskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCardView.swift; sourceTree = "<group>"; };
+		9CE14651EFE9E2FEA2E6C147 /* CPUStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUStressEngine.swift; sourceTree = "<group>"; };
+		9D706DD7125F4584463F1762 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		A0595AB49D0EF7381493F42C /* MonitorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCardView.swift; sourceTree = "<group>"; };
+		B4616691C3DDDDE9B813EBA3 /* IconTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTile.swift; sourceTree = "<group>"; };
+		C065B7E1CF678C3D2F83D59D /* RedlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedlineApp.swift; sourceTree = "<group>"; };
+		C23CAC28DC651A1072FFA4FB /* ActivityLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogView.swift; sourceTree = "<group>"; };
+		C6AC4AC39BC913E4A62EC013 /* SystemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemInfo.swift; sourceTree = "<group>"; };
+		C8809C62B036E894DC8D708E /* CPUCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUCardView.swift; sourceTree = "<group>"; };
+		CAEC1613358AC5203DF72946 /* GPUStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUStressEngine.swift; sourceTree = "<group>"; };
+		D7A0EDFDC2CD590E9BFFEEBD /* StressTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StressTypes.swift; sourceTree = "<group>"; };
+		E97DF152F0FDB5FCE45AF461 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EA2A0017F9C0D1C5185D7CE8 /* SystemMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitor.swift; sourceTree = "<group>"; };
+		EEC808502A0EC57A8AD29715 /* GPUCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUCardView.swift; sourceTree = "<group>"; };
+		F236B4E52C99C20F47C51681 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		26FBD772BDD128EE30E1EDB4 /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				9CE14651EFE9E2FEA2E6C147 /* CPUStressEngine.swift */,
+				120E8E3DD1EE11B733AF4FD2 /* DiskStressEngine.swift */,
+				CAEC1613358AC5203DF72946 /* GPUStressEngine.swift */,
+				778EC9E8E777627857E105E5 /* MemoryStressEngine.swift */,
+				D7A0EDFDC2CD590E9BFFEEBD /* StressTypes.swift */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
+		34E2690C960C6317D2DF9D30 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9D706DD7125F4584463F1762 /* Shaders.metal */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		366A92D659AFB52055F17893 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAC28DC651A1072FFA4FB /* ActivityLogView.swift */,
+				7BD3EAE60E879FF9EA91937F /* ContentView.swift */,
+				80EDBA1F64E899C2FC412FA2 /* Controls.swift */,
+				C8809C62B036E894DC8D708E /* CPUCardView.swift */,
+				92D091941512A15806E8CC9A /* DiskCardView.swift */,
+				EEC808502A0EC57A8AD29715 /* GPUCardView.swift */,
+				2B886B9BF9C937CB5492853A /* HeaderView.swift */,
+				B4616691C3DDDDE9B813EBA3 /* IconTile.swift */,
+				02BC8C75B59C25870E84259D /* MemoryCardView.swift */,
+				A0595AB49D0EF7381493F42C /* MonitorCardView.swift */,
+				F236B4E52C99C20F47C51681 /* Theme.swift */,
+				2A60FF8FA8646935761833BC /* VisualEffectView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		36AD18435A67B713DD027D03 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				C6AC4AC39BC913E4A62EC013 /* SystemInfo.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		43F5286D74FBBB894291E49F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5B4266B0FD6FBEECAE1E79B8 /* AppModel.swift */,
+				C065B7E1CF678C3D2F83D59D /* RedlineApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4707618540E3D744E35D6824 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77E369CE6531396BD0644322 /* Redline.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B2BCA15ED12DBCA572F8165B /* Redline */ = {
+			isa = PBXGroup;
+			children = (
+				E97DF152F0FDB5FCE45AF461 /* Assets.xcassets */,
+				43F5286D74FBBB894291E49F /* App */,
+				26FBD772BDD128EE30E1EDB4 /* Engines */,
+				C0DDC42E63A0A6FBA35367FF /* Monitor */,
+				34E2690C960C6317D2DF9D30 /* Resources */,
+				36AD18435A67B713DD027D03 /* System */,
+				366A92D659AFB52055F17893 /* Views */,
+			);
+			path = Redline;
+			sourceTree = "<group>";
+		};
+		C0DDC42E63A0A6FBA35367FF /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				EA2A0017F9C0D1C5185D7CE8 /* SystemMonitor.swift */,
+			);
+			path = Monitor;
+			sourceTree = "<group>";
+		};
+		F1C79CFD64D9F84A344D20BF = {
+			isa = PBXGroup;
+			children = (
+				B2BCA15ED12DBCA572F8165B /* Redline */,
+				4707618540E3D744E35D6824 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		78E2D3ED9A80CB97FFD0EA18 /* Redline */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 39295FF4190F58CCA17A4229 /* Build configuration list for PBXNativeTarget "Redline" */;
+			buildPhases = (
+				480DB2BED000FEADE82C8AFD /* Sources */,
+				AB8EC151CE9BED727E05F6CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Redline;
+			packageProductDependencies = (
+			);
+			productName = Redline;
+			productReference = 77E369CE6531396BD0644322 /* Redline.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BDBA1FFFB56DFE185BB8A607 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					78E2D3ED9A80CB97FFD0EA18 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 351C0B475CFFDDA670E8AD46 /* Build configuration list for PBXProject "Redline" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F1C79CFD64D9F84A344D20BF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4707618540E3D744E35D6824 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				78E2D3ED9A80CB97FFD0EA18 /* Redline */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB8EC151CE9BED727E05F6CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99FB57D935E3DE69B9116D06 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		480DB2BED000FEADE82C8AFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				432DC3443CC8AD350B994E4F /* ActivityLogView.swift in Sources */,
+				0B0EE030ADC45B855CA166CA /* AppModel.swift in Sources */,
+				247B95FEA223C524A8E244DB /* CPUCardView.swift in Sources */,
+				7833B337408155905D975A47 /* CPUStressEngine.swift in Sources */,
+				C6CDDDB29E85E9DB6116A8C5 /* ContentView.swift in Sources */,
+				CECBF6679DD0DFBEFFC6DDD2 /* Controls.swift in Sources */,
+				20AB815074BDF2F22EA8D9C3 /* DiskCardView.swift in Sources */,
+				544EDCD5585988D3FDD57A5C /* DiskStressEngine.swift in Sources */,
+				A74F170992637EB34E77A942 /* GPUCardView.swift in Sources */,
+				59DA64CA09A38C87235B60B2 /* GPUStressEngine.swift in Sources */,
+				0CE28D27A63E09E2B105F83F /* HeaderView.swift in Sources */,
+				65F7F39BA86D2B04ECF41F2C /* IconTile.swift in Sources */,
+				116357B7483C2907BB4B3311 /* MemoryCardView.swift in Sources */,
+				11D98BBD3B29D0FE8A1208B4 /* MemoryStressEngine.swift in Sources */,
+				4840A8AD400EB97910615DB8 /* MonitorCardView.swift in Sources */,
+				57790F357FBE4AD22E89A877 /* RedlineApp.swift in Sources */,
+				CE4CF5CD53EDC48F20841703 /* Shaders.metal in Sources */,
+				42EB4B86E438105859B4A880 /* StressTypes.swift in Sources */,
+				D0AD78FBD73C7F0AAA84735E /* SystemInfo.swift in Sources */,
+				274132D1B3EF379C8E48727C /* SystemMonitor.swift in Sources */,
+				29BE8482CF54D1D0BCE8AA97 /* Theme.swift in Sources */,
+				B45CA5D3EF5F66EF840B9AC6 /* VisualEffectView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		10362DBFA5C0FDA0CA977B8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weber.redline;
+				PRODUCT_NAME = Redline;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5DEAE7358B0AEE1BEDDD6D49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weber.redline;
+				PRODUCT_NAME = Redline;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BA1E791674258D5AA978FFCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D26BE9F6CC31CD0C601D4ABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		351C0B475CFFDDA670E8AD46 /* Build configuration list for PBXProject "Redline" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D26BE9F6CC31CD0C601D4ABA /* Debug */,
+				BA1E791674258D5AA978FFCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		39295FF4190F58CCA17A4229 /* Build configuration list for PBXNativeTarget "Redline" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10362DBFA5C0FDA0CA977B8A /* Debug */,
+				5DEAE7358B0AEE1BEDDD6D49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BDBA1FFFB56DFE185BB8A607 /* Project object */;
+}

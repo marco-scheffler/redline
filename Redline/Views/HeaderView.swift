@@ -6,9 +6,9 @@ struct HeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Stress Test")
+                Text("Redline")
                     .font(.system(size: 28, weight: .bold))
-                Text("System-Belastungstest · CPU · GPU · Memory · Disk")
+                Text("Push your Mac to the redline · CPU · GPU · Memory · Disk")
                     .font(.system(size: 12))
                     .foregroundStyle(.tertiary)
             }

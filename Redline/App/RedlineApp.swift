@@ -1,11 +1,11 @@
 import SwiftUI
 
 @main
-struct MacBookStressTestApp: App {
+struct RedlineApp: App {
     @StateObject private var model = AppModel()
 
     var body: some Scene {
-        WindowGroup("MacBook Stress Test") {
+        WindowGroup("Redline") {
             ContentView()
                 .environmentObject(model)
         }

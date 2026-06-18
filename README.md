@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="docs/icon.png" width="128" height="128" alt="MacBook Stress Test" />
+<img src="docs/icon.png" width="128" height="128" alt="Redline" />
 
-# MacBook Stress Test
+# Redline
 
-**Hit Run. Watch your Mac sweat.**
+**Push your Mac to the redline.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform: macOS 14+](https://img.shields.io/badge/Platform-macOS%2014%2B-blue.svg)](#requirements)
 [![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-required-black.svg)](#requirements)
-[![Latest Release](https://img.shields.io/github/v/release/marco-scheffler/macbook-stress-test)](https://github.com/marco-scheffler/macbook-stress-test/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/marco-scheffler/redline)](https://github.com/marco-scheffler/redline/releases/latest)
 
-A native macOS app that pushes your CPU, GPU, memory and disk to their limits —
+A native macOS app that drives your CPU, GPU, memory and disk to their limits —
 with a live system monitor — all in one window that looks like part of macOS.
 
 </div>
@@ -25,8 +25,8 @@ validating a fresh machine, burning in new hardware, or just seeing how far it g
 Most stress tools are either command-line gymnastics or cross-platform apps that
 feel foreign on a Mac.
 
-MacBook Stress Test is the alternative: **one native SwiftUI window** that saturates
-every subsystem on demand and shows you exactly what's happening, in real time.
+Redline is the alternative: **one native SwiftUI window** that saturates every
+subsystem on demand and shows you exactly what's happening, in real time.
 
 ## Highlights
 
@@ -45,18 +45,18 @@ every subsystem on demand and shows you exactly what's happening, in real time.
 
 ### Option A — Download (recommended)
 
-1. Grab the latest **MacBookStressTest-x.y.z.zip** from
-   [Releases](https://github.com/marco-scheffler/macbook-stress-test/releases/latest).
-2. Unzip and drag `MacBook Stress Test.app` into `/Applications`.
+1. Grab the latest **Redline-x.y.z.zip** from
+   [Releases](https://github.com/marco-scheffler/redline/releases/latest).
+2. Unzip and drag `Redline.app` into `/Applications`.
 3. The build is unsigned, so on first launch right-click the app → **Open**, then
    confirm once to let Gatekeeper through.
 
 ### Option B — Build from source
 
 ```bash
-git clone https://github.com/marco-scheffler/macbook-stress-test.git
-cd macbook-stress-test
-open MacBookStressTest.xcodeproj    # then press Run (⌘R)
+git clone https://github.com/marco-scheffler/redline.git
+cd redline
+open Redline.xcodeproj    # then press Run (⌘R)
 ```
 
 The Xcode project is committed, so it opens and runs without any extra tooling.
@@ -80,7 +80,7 @@ Watch the per-core grid and the CPU / memory / swap gauges to see the impact as 
 
 ## Notes
 
-The app deliberately drives your hardware hard, which raises temperatures and fan
+Redline deliberately drives your hardware hard, which raises temperatures and fan
 speed. Keep an eye on thermals and use **Stop All** (or quit) to end every running
 test and release allocated memory.
 

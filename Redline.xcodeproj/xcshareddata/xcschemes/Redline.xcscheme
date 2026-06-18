@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "90E46CD137C5BBAD9A8C5D59"
-               BuildableName = "MacBookStressTest.app"
-               BlueprintName = "MacBookStressTest"
-               ReferencedContainer = "container:MacBookStressTest.xcodeproj">
+               BlueprintIdentifier = "78E2D3ED9A80CB97FFD0EA18"
+               BuildableName = "Redline.app"
+               BlueprintName = "Redline"
+               ReferencedContainer = "container:Redline.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "90E46CD137C5BBAD9A8C5D59"
-            BuildableName = "MacBookStressTest.app"
-            BlueprintName = "MacBookStressTest"
-            ReferencedContainer = "container:MacBookStressTest.xcodeproj">
+            BlueprintIdentifier = "78E2D3ED9A80CB97FFD0EA18"
+            BuildableName = "Redline.app"
+            BlueprintName = "Redline"
+            ReferencedContainer = "container:Redline.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "90E46CD137C5BBAD9A8C5D59"
-            BuildableName = "MacBookStressTest.app"
-            BlueprintName = "MacBookStressTest"
-            ReferencedContainer = "container:MacBookStressTest.xcodeproj">
+            BlueprintIdentifier = "78E2D3ED9A80CB97FFD0EA18"
+            BuildableName = "Redline.app"
+            BlueprintName = "Redline"
+            ReferencedContainer = "container:Redline.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "90E46CD137C5BBAD9A8C5D59"
-            BuildableName = "MacBookStressTest.app"
-            BlueprintName = "MacBookStressTest"
-            ReferencedContainer = "container:MacBookStressTest.xcodeproj">
+            BlueprintIdentifier = "78E2D3ED9A80CB97FFD0EA18"
+            BuildableName = "Redline.app"
+            BlueprintName = "Redline"
+            ReferencedContainer = "container:Redline.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
