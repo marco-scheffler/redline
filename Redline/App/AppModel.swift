@@ -12,7 +12,7 @@ final class AppModel: ObservableObject {
     let disk: DiskStressEngine
 
     init() {
-        monitor = SystemMonitor(totalRAM: info.totalRAM)
+        monitor = SystemMonitor(totalRAM: info.totalRAM, log: log)
         cpu = CPUStressEngine(maxCores: info.logicalCores, log: log)
         gpu = GPUStressEngine(log: log)
         let maxGB = max(1, Int(Double(info.totalRAM) / 1_073_741_824 * 0.9))

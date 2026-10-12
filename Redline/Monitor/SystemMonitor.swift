@@ -1,7 +1,8 @@
 import Foundation
 import Darwin
 
-/// Samples live system load (CPU per-core, memory, swap) ~1 Hz using Mach/sysctl.
+/// Samples live system load (CPU per-core, memory, swap) ~1 Hz using Mach/sysctl,
+/// and tracks the thermal state macOS reports.
 /// Replaces the Python version's psutil dependency with native APIs.
 final class SystemMonitor: ObservableObject {
     @Published private(set) var overallCPU: Double = 0          // 0…100
@@ -10,14 +11,18 @@ final class SystemMonitor: ObservableObject {
     @Published private(set) var memoryUsedBytes: UInt64 = 0
     @Published private(set) var swapFraction: Double = 0         // 0…1
     @Published private(set) var swapUsedBytes: UInt64 = 0
+    @Published private(set) var thermalState = ProcessInfo.processInfo.thermalState
 
     let totalRAM: UInt64
 
+    private let log: ActivityLog
     private var timer: Timer?
+    private var thermalObserver: NSObjectProtocol?
     private var previousTicks: [(user: UInt32, system: UInt32, idle: UInt32, nice: UInt32)] = []
 
-    init(totalRAM: UInt64) {
+    init(totalRAM: UInt64, log: ActivityLog) {
         self.totalRAM = totalRAM
+        self.log = log
     }
 
     func start() {
@@ -27,11 +32,21 @@ final class SystemMonitor: ObservableObject {
         }
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer
+
+        thermalObserver = NotificationCenter.default.addObserver(
+            forName: ProcessInfo.thermalStateDidChangeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            thermalState = ProcessInfo.processInfo.thermalState
+            log.log("Thermal state: \(thermalState.label)")
+        }
     }
 
     func stop() {
         timer?.invalidate()
         timer = nil
+        if let thermalObserver { NotificationCenter.default.removeObserver(thermalObserver) }
+        thermalObserver = nil
     }
 
     private func sample() {
@@ -130,6 +145,18 @@ final class SystemMonitor: ObservableObject {
         DispatchQueue.main.async {
             self.swapUsedBytes = used
             self.swapFraction = fraction
+        }
+    }
+}
+
+extension ProcessInfo.ThermalState {
+    var label: String {
+        switch self {
+        case .nominal: return "Nominal"
+        case .fair: return "Fair"
+        case .serious: return "Serious"
+        case .critical: return "Critical"
+        @unknown default: return "Unknown"
         }
     }
 }
