@@ -43,13 +43,20 @@ enum DiskMode: String, CaseIterable, Identifiable {
 
 /// A tiny lock-protected boolean used to ask worker threads to stop cooperatively.
 /// Workers poll `isSet` only once per outer batch, so lock overhead is negligible.
+/// Each run gets a fresh flag, so a worker that is slow to notice a stop can never
+/// be revived by the next start.
 final class AtomicFlag {
     private var value = false
     private let lock = NSLock()
 
     func set() { lock.lock(); value = true; lock.unlock() }
-    func clear() { lock.lock(); value = false; lock.unlock() }
     var isSet: Bool { lock.lock(); defer { lock.unlock() }; return value }
+
+    /// Runs `update` on the main queue unless this run has been stopped by then,
+    /// so a finishing worker can't overwrite the state of a newer run.
+    func onMainUnlessSet(_ update: @escaping () -> Void) {
+        DispatchQueue.main.async { if !self.isSet { update() } }
+    }
 }
 
 // MARK: - Activity log

@@ -10,7 +10,7 @@ final class GPUStressEngine: ObservableObject {
     @Published private(set) var statusText = "Idle"
 
     private let log: ActivityLog
-    private let stopFlag = AtomicFlag()
+    private var stopFlag: AtomicFlag?
     private var thread: Thread?
 
     init(log: ActivityLog) {
@@ -23,14 +23,15 @@ final class GPUStressEngine: ObservableObject {
             log.log("GPU: no Metal device found")
             return
         }
-        stopFlag.clear()
+        let stopFlag = AtomicFlag()
+        self.stopFlag = stopFlag
         isRunning = true
         gpuName = device.name
         statusText = "Starting…"
         log.log("GPU: starting (\(bufferMB) MB)…")
 
         let mb = bufferMB
-        let thread = Thread { [weak self] in self?.run(device: device, bufferMB: mb) }
+        let thread = Thread { [weak self] in self?.run(device: device, bufferMB: mb, stop: stopFlag) }
         thread.qualityOfService = .userInitiated
         self.thread = thread
         thread.start()
@@ -38,7 +39,8 @@ final class GPUStressEngine: ObservableObject {
 
     func stop() {
         guard isRunning else { return }
-        stopFlag.set()
+        stopFlag?.set()
+        stopFlag = nil
         thread = nil
         isRunning = false
         iterationsPerSecond = 0
@@ -46,39 +48,43 @@ final class GPUStressEngine: ObservableObject {
         log.log("GPU: stopped")
     }
 
-    private func run(device: MTLDevice, bufferMB: Int) {
+    private func run(device: MTLDevice, bufferMB: Int, stop: AtomicFlag) {
         guard let queue = device.makeCommandQueue(),
               let library = device.makeDefaultLibrary(),
               let function = library.makeFunction(name: "stress"),
               let pipeline = try? device.makeComputePipelineState(function: function) else {
-            log.log("GPU: pipeline setup failed")
-            DispatchQueue.main.async { self.isRunning = false; self.statusText = "Idle" }
+            fail("GPU: pipeline setup failed", stop: stop)
             return
         }
 
         let elementCount = bufferMB * 1024 * 1024 / MemoryLayout<Float>.size
         guard let buffer = device.makeBuffer(length: elementCount * MemoryLayout<Float>.size,
                                              options: .storageModeShared) else {
-            log.log("GPU: buffer allocation failed")
-            DispatchQueue.main.async { self.isRunning = false; self.statusText = "Idle" }
+            fail("GPU: buffer allocation failed", stop: stop)
             return
         }
 
+        // Seed the buffer with varied values in -1…1, in slices so a stop is noticed quickly.
         let pointer = buffer.contents().bindMemory(to: Float.self, capacity: elementCount)
-        for i in 0..<elementCount { pointer[i] = Float.random(in: -1...1) }
+        let slice = 1 << 20
+        for sliceStart in stride(from: 0, to: elementCount, by: slice) {
+            if stop.isSet { return }
+            for i in sliceStart..<min(sliceStart + slice, elementCount) {
+                pointer[i] = Float(i & 0xFFFF) / 32768 - 1
+            }
+        }
 
-        DispatchQueue.main.async {
+        stop.onMainUnlessSet {
             self.statusText = "\(bufferMB) MB buffer"
             self.log.log("GPU active: \(self.gpuName) (\(bufferMB) MB)")
         }
 
         let threadsPerGroup = min(pipeline.maxTotalThreadsPerThreadgroup, 256)
         let groupCount = (elementCount + threadsPerGroup - 1) / threadsPerGroup
-        let startTime = Date()
         var iterations = 0
-        var lastReport = startTime
+        var lastReport = Date()
 
-        while !stopFlag.isSet {
+        while !stop.isSet {
             guard let commandBuffer = queue.makeCommandBuffer(),
                   let encoder = commandBuffer.makeComputeCommandEncoder() else { continue }
             encoder.setComputePipelineState(pipeline)
@@ -92,13 +98,20 @@ final class GPUStressEngine: ObservableObject {
             iterations += 1
             let now = Date()
             if now.timeIntervalSince(lastReport) >= 1.0 {
-                let rate = Double(iterations) / now.timeIntervalSince(startTime)
+                // Rate over the last interval, so thermal throttling shows up right away.
+                let rate = Double(iterations) / now.timeIntervalSince(lastReport)
+                iterations = 0
                 lastReport = now
-                DispatchQueue.main.async {
+                stop.onMainUnlessSet {
                     self.iterationsPerSecond = rate
                     self.statusText = String(format: "%.1f iter/s · %d MB", rate, bufferMB)
                 }
             }
         }
+    }
+
+    private func fail(_ message: String, stop: AtomicFlag) {
+        log.log(message)
+        stop.onMainUnlessSet { self.isRunning = false; self.statusText = "Idle" }
     }
 }

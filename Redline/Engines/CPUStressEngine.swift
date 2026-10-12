@@ -11,7 +11,7 @@ final class CPUStressEngine: ObservableObject {
 
     let maxCores: Int
     private let log: ActivityLog
-    private let stopFlag = AtomicFlag()
+    private var stopFlag: AtomicFlag?
     private var threads: [Thread] = []
     private var autoStop: DispatchWorkItem?
 
@@ -23,7 +23,8 @@ final class CPUStressEngine: ObservableObject {
 
     func start() {
         guard !isRunning else { return }
-        stopFlag.clear()
+        let stopFlag = AtomicFlag()
+        self.stopFlag = stopFlag
         let count = max(1, min(cores, maxCores))
         let mode = workload
 
@@ -52,7 +53,8 @@ final class CPUStressEngine: ObservableObject {
         guard isRunning else { return }
         autoStop?.cancel()
         autoStop = nil
-        stopFlag.set()
+        stopFlag?.set()
+        stopFlag = nil
         threads.removeAll()
         isRunning = false
         statusText = "Idle"
