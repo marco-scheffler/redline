@@ -30,17 +30,30 @@
 		CE4CF5CD53EDC48F20841703 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9D706DD7125F4584463F1762 /* Shaders.metal */; };
 		CECBF6679DD0DFBEFFC6DDD2 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDBA1F64E899C2FC412FA2 /* Controls.swift */; };
 		D0AD78FBD73C7F0AAA84735E /* SystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AC4AC39BC913E4A62EC013 /* SystemInfo.swift */; };
+		D7436D73B1C8F313B976C774 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0A67B3E6C32A0AA915BCD4 /* EngineTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		018EF2FA91B345195BA6DAF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDBA1FFFB56DFE185BB8A607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 78E2D3ED9A80CB97FFD0EA18;
+			remoteInfo = Redline;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		02BC8C75B59C25870E84259D /* MemoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCardView.swift; sourceTree = "<group>"; };
 		120E8E3DD1EE11B733AF4FD2 /* DiskStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStressEngine.swift; sourceTree = "<group>"; };
+		1AC17EAADCBE3AAB9E82A950 /* RedlineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedlineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A60FF8FA8646935761833BC /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		2B886B9BF9C937CB5492853A /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5B4266B0FD6FBEECAE1E79B8 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		778EC9E8E777627857E105E5 /* MemoryStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryStressEngine.swift; sourceTree = "<group>"; };
 		77E369CE6531396BD0644322 /* Redline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Redline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD3EAE60E879FF9EA91937F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7C0A67B3E6C32A0AA915BCD4 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		80EDBA1F64E899C2FC412FA2 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		92D091941512A15806E8CC9A /* DiskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCardView.swift; sourceTree = "<group>"; };
 		9CE14651EFE9E2FEA2E6C147 /* CPUStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUStressEngine.swift; sourceTree = "<group>"; };
@@ -120,8 +133,17 @@
 			isa = PBXGroup;
 			children = (
 				77E369CE6531396BD0644322 /* Redline.app */,
+				1AC17EAADCBE3AAB9E82A950 /* RedlineTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		859B4D19E31ACE649F2A3526 /* RedlineTests */ = {
+			isa = PBXGroup;
+			children = (
+				7C0A67B3E6C32A0AA915BCD4 /* EngineTests.swift */,
+			);
+			path = RedlineTests;
 			sourceTree = "<group>";
 		};
 		B2BCA15ED12DBCA572F8165B /* Redline */ = {
@@ -150,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				B2BCA15ED12DBCA572F8165B /* Redline */,
+				859B4D19E31ACE649F2A3526 /* RedlineTests */,
 				4707618540E3D744E35D6824 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -175,6 +198,24 @@
 			productReference = 77E369CE6531396BD0644322 /* Redline.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7A8A7AD9C3C8334E35E541ED /* RedlineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B59124FAE3B4C2E67D5BEE14 /* Build configuration list for PBXNativeTarget "RedlineTests" */;
+			buildPhases = (
+				1B68890AA8D06446DA886915 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B977944F7E50DFB615941237 /* PBXTargetDependency */,
+			);
+			name = RedlineTests;
+			packageProductDependencies = (
+			);
+			productName = RedlineTests;
+			productReference = 1AC17EAADCBE3AAB9E82A950 /* RedlineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -185,6 +226,10 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					78E2D3ED9A80CB97FFD0EA18 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					7A8A7AD9C3C8334E35E541ED = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Manual;
 					};
@@ -205,6 +250,7 @@
 			projectRoot = "";
 			targets = (
 				78E2D3ED9A80CB97FFD0EA18 /* Redline */,
+				7A8A7AD9C3C8334E35E541ED /* RedlineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -221,6 +267,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1B68890AA8D06446DA886915 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7436D73B1C8F313B976C774 /* EngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		480DB2BED000FEADE82C8AFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,6 +306,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B977944F7E50DFB615941237 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 78E2D3ED9A80CB97FFD0EA18 /* Redline */;
+			targetProxy = 018EF2FA91B345195BA6DAF0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		10362DBFA5C0FDA0CA977B8A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -272,6 +334,24 @@
 				SDKROOT = macosx;
 			};
 			name = Debug;
+		};
+		15774D45DD03811CDCDB3627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.marco-scheffler.redline.tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Redline.app/Contents/MacOS/Redline";
+			};
+			name = Release;
 		};
 		5DEAE7358B0AEE1BEDDD6D49 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -426,6 +506,24 @@
 			};
 			name = Debug;
 		};
+		D8EE4F271AB54937AF4C0610 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.marco-scheffler.redline.tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Redline.app/Contents/MacOS/Redline";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -443,6 +541,15 @@
 			buildConfigurations = (
 				10362DBFA5C0FDA0CA977B8A /* Debug */,
 				5DEAE7358B0AEE1BEDDD6D49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B59124FAE3B4C2E67D5BEE14 /* Build configuration list for PBXNativeTarget "RedlineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8EE4F271AB54937AF4C0610 /* Debug */,
+				15774D45DD03811CDCDB3627 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
