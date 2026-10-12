@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Metal toolchain
+        run: xcrun metal --version >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
+
+      # The tag is the single source of truth for the version: v1.2.0 → 1.2.0.
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project Redline.xcodeproj \
+            -scheme Redline \
+            -configuration Release \
+            -derivedDataPath build \
+            MARKETING_VERSION="${GITHUB_REF_NAME#v}" \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}"
+
+      - name: Package
+        run: |
+          ditto -c -k --keepParent build/Build/Products/Release/Redline.app "Redline-${GITHUB_REF_NAME#v}.zip"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" "Redline-$version.zip" \
+            --title "Redline $version" \
+            --generate-notes \
+            --notes "## Install
+          1. Download \`Redline-$version.zip\` below and unzip.
+          2. Move \`Redline.app\` to \`/Applications\`.
+          3. The build is unsigned — right-click the app → **Open**, then confirm once.
+
+          Requires macOS 14+ on Apple Silicon."
