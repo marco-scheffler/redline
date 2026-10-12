@@ -29,8 +29,6 @@ final class ControlsUITests: XCTestCase {
         memory.radioButtons["1"].click()
         disk.radioButtons["256"].click()
 
-        let window = app.windows.firstMatch
-        print("UI-DIAG window frame: \(window.frame), screen: \(XCUIScreen.main.screenshot().image.size)")
         app.buttons["Run All Tests"].click()
         for card in cards {
             XCTAssertTrue(card.buttons["Stop"].waitForExistence(timeout: 10), "\(card.identifier) did not start")
