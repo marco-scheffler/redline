@@ -99,7 +99,7 @@ final class DiskStressEngine: ObservableObject {
             fail("Disk: write failed (\(String(cString: strerror(errno))))", stop: stop)
             return false
         }
-        fsync(fd)
+        _ = fcntl(fd, F_FULLFSYNC)
         return !stop.isSet
     }
 
@@ -128,7 +128,9 @@ final class DiskStressEngine: ObservableObject {
                 fail("Disk: write failed (\(String(cString: strerror(errno))))", stop: stop)
                 return
             }
-            fsync(fd)
+            // fsync alone leaves data in the drive's write cache; only F_FULLFSYNC
+            // makes the timing cover the trip to the flash.
+            _ = fcntl(fd, F_FULLFSYNC)
             report(bytes: written, since: startTime, stop: stop)
         }
     }
