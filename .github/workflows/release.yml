@@ -3,15 +3,30 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  # Dry run: signs and notarizes, then uploads the zip as a workflow artifact
+  # instead of publishing a release.
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+env:
+  TEAM_ID: 7YN7YUH475
 
 jobs:
   release:
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
+
+      # The tag is the single source of truth for the version: v1.2.0 → 1.2.0.
+      - name: Set version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+          else
+            echo "VERSION=0.0.0" >> "$GITHUB_ENV"
+          fi
 
       - name: Install Metal toolchain
         run: xcrun metal --version >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
@@ -25,7 +40,22 @@ jobs:
             -destination 'platform=macOS,arch=arm64' \
             -derivedDataPath test-build
 
-      # The tag is the single source of truth for the version: v1.2.0 → 1.2.0.
+      - name: Import signing certificate
+        env:
+          P12_BASE64: ${{ secrets.DEVELOPER_ID_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.DEVELOPER_ID_P12_PASSWORD }}
+        run: |
+          keychain="$RUNNER_TEMP/signing.keychain-db"
+          keychain_password="$(uuidgen)"
+          echo "$P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$keychain_password" "$keychain"
+          security set-keychain-settings -lut 3600 "$keychain"
+          security unlock-keychain -p "$keychain_password" "$keychain"
+          security import "$RUNNER_TEMP/cert.p12" -k "$keychain" -P "$P12_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$keychain_password" "$keychain" >/dev/null
+          security list-keychains -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/cert.p12"
+
       - name: Build
         run: |
           xcodebuild build \
@@ -33,24 +63,53 @@ jobs:
             -scheme Redline \
             -configuration Release \
             -derivedDataPath build \
-            MARKETING_VERSION="${GITHUB_REF_NAME#v}" \
-            CURRENT_PROJECT_VERSION="${{ github.run_number }}"
+            MARKETING_VERSION="$VERSION" \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}" \
+            CODE_SIGN_IDENTITY="Developer ID Application" \
+            DEVELOPMENT_TEAM="$TEAM_ID" \
+            OTHER_CODE_SIGN_FLAGS="--timestamp"
+
+      - name: Notarize
+        env:
+          KEY_P8_BASE64: ${{ secrets.NOTARY_KEY_P8_BASE64 }}
+          KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          ISSUER_ID: ${{ secrets.NOTARY_ISSUER_ID }}
+        run: |
+          app=build/Build/Products/Release/Redline.app
+          echo "$KEY_P8_BASE64" | base64 --decode > "$RUNNER_TEMP/notary.p8"
+          ditto -c -k --keepParent "$app" "$RUNNER_TEMP/notarize.zip"
+          xcrun notarytool submit "$RUNNER_TEMP/notarize.zip" \
+            --key "$RUNNER_TEMP/notary.p8" --key-id "$KEY_ID" --issuer "$ISSUER_ID" \
+            --wait --timeout 30m
+          rm "$RUNNER_TEMP/notary.p8"
+          xcrun stapler staple "$app"
+          spctl --assess --type execute --verbose=2 "$app"
 
       - name: Package
         run: |
-          ditto -c -k --keepParent build/Build/Products/Release/Redline.app "Redline-${GITHUB_REF_NAME#v}.zip"
+          ditto -c -k --keepParent build/Build/Products/Release/Redline.app "Redline-$VERSION.zip"
+
+      - name: Upload dry-run artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Redline-${{ env.VERSION }}
+          path: Redline-${{ env.VERSION }}.zip
 
       - name: Publish release
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version="${GITHUB_REF_NAME#v}"
-          gh release create "$GITHUB_REF_NAME" "Redline-$version.zip" \
-            --title "Redline $version" \
+          gh release create "$GITHUB_REF_NAME" "Redline-$VERSION.zip" \
+            --title "Redline $VERSION" \
             --generate-notes \
             --notes "## Install
-          1. Download \`Redline-$version.zip\` below and unzip.
-          2. Move \`Redline.app\` to \`/Applications\`.
-          3. The build is unsigned — right-click the app → **Open**, then confirm once.
+          1. Download \`Redline-$VERSION.zip\` below and unzip.
+          2. Move \`Redline.app\` to \`/Applications\` and open it.
 
           Requires macOS 14+ on Apple Silicon."
+
+      - name: Remove signing keychain
+        if: always()
+        run: security delete-keychain "$RUNNER_TEMP/signing.keychain-db" 2>/dev/null || true
