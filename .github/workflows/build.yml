@@ -21,3 +21,11 @@ jobs:
             -scheme Redline \
             -configuration Release \
             -derivedDataPath build
+
+      - name: Test
+        run: |
+          xcodebuild test \
+            -project Redline.xcodeproj \
+            -scheme Redline \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath build
