@@ -79,10 +79,9 @@ Watch the per-core grid and the CPU / memory / swap gauges to see the impact as 
 - Xcode 26+ to build from source, with the Metal Toolchain component installed
   (download it separately in Xcode → Settings → Components if needed)
 
-**macOS 27 / Xcode 27:** static source review found no specific migration
-requirement. An Xcode 27 build and testing on macOS 27 are still pending; verified
-compatibility is not claimed. See the [compatibility review](docs/macos-27-compatibility.md)
-for the scope, limitations and validation steps.
+**macOS 27 / Xcode 27:** builds cleanly with Xcode 27 and runs on macOS 27, including
+the v1.0.0 and v1.1.0 releases. Running an Xcode 27 build on macOS 14 is not yet
+verified. See the [compatibility review](docs/macos-27-compatibility.md) for details.
 
 ## Notes
 

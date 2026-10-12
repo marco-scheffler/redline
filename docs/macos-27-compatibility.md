@@ -1,80 +1,78 @@
-# macOS 27 / Xcode 27 compatibility review
+# macOS 27 / Xcode 27 compatibility
 
-Reviewed on 2026-10-07 against `main` at
-`c6d5b6098879d9422e3c6ec9978e22cb3b97f46d`.
+Static review on 2026-10-07 against `c6d5b60`; validated on a Mac on 2026-10-12
+against `045b486` plus the fixes in this change.
 
-## Result and evidence limits
+## Result
 
-No specific macOS 27 migration requirement was identified in the reviewed source
-and Apple documentation. This is a static assessment, not a successful SDK build
-or runtime qualification. The available environment is Linux x86_64, without
-`xcodebuild`, `xcrun`, `xcodegen` or Swift. Project regeneration, compilation,
-linking, Metal shader compilation and execution were not performed.
+Redline builds without errors or warnings with Xcode 27 and runs correctly on
+macOS 27. Both published releases (v1.0.0 and v1.1.0, built with the macOS 26.5
+SDK) also launch on macOS 27. No macOS 27 migration was required.
 
-The latest published release remains v1.0.0 (2026-06-18). Its binary was not
-executed or inspected for SDK metadata; this review does not qualify that binary
-on macOS 27 or establish that it was built with Xcode 27.
+Still open: running an Xcode 27 build on macOS 14 (back-deployment), and a manual
+click-through of the UI (Run All, pickers and sliders, Stop All). The engines and
+the monitor were exercised directly, without the UI.
 
-## Static findings
+## Environment
 
-| Area | Calls / configuration checked | Assessment |
+| | |
+| --- | --- |
+| Mac | Apple M5 Max (Metal 4), 18 cores, 64 GB RAM |
+| macOS | 27.0 (26A428) |
+| Xcode | 27.0 (27A266a), macOS SDK 27.0 |
+| Metal Toolchain | 27.1, `metal` 32023.921 |
+| XcodeGen | 2.46.0 |
+
+## Build
+
+- `xcodegen generate` reproduces the committed project without changes.
+- Debug and Release builds (`-destination 'platform=macOS,arch=arm64'`,
+  `CODE_SIGNING_ALLOWED=NO`) succeed with no errors or warnings in Swift 6
+  language mode.
+- The app contains `default.metallib`, is arm64 only, and targets macOS 14.0
+  with SDK 27.0 (`LC_BUILD_VERSION`).
+- CI builds the same sources with Xcode 26.6.
+
+## Runtime checks on macOS 27
+
+| Area | Check | Result |
 | --- | --- | --- |
-| Build configuration | `project.yml` and committed `project.pbxproj`: macOS 14.0, Swift 5.0, `SDKROOT = macosx`; no external packages | No SDK-26 pin. Apple's Xcode 27 matrix supports macOS 12–27 deployment and Swift 5 language mode. Keep the macOS 14 minimum and Swift 5 mode; raising either is unnecessary for this review. |
-| Metal | `MTLCreateSystemDefaultDevice`, command queue, `makeDefaultLibrary`, `stress` compute pipeline, shared buffer, encoder dispatch and completion wait | Established Metal compute path; no Metal 4 migration identified. `Shaders.metal` is in the committed Sources build phase. A matching Metal Toolchain component must be installed; default library generation/loading remains unverified. |
-| Dispatch / shader | `min(pipeline.maxTotalThreadsPerThreadgroup, 256)`, rounded-up group count, buffer-indexed floating-point kernel | The group size respects the reported pipeline limit. The kernel has no bounds guard: validation must confirm that the chosen group size divides the element count for each selectable buffer size on the tested GPU. Apple's macOS 27 texture-sampler fixes do not concern this buffer-only kernel. |
-| CPU monitoring | `host_processor_info(PROCESSOR_CPU_LOAD_INFO)`, tick deltas, `vm_deallocate` | Return code is checked, counters use wrapping subtraction, and the returned array is deallocated using its reported count. No replacement API identified; returned array layout/count and sampling behavior need runtime validation. |
-| Memory monitoring | `host_statistics64(HOST_VM_INFO64)`, `vm_statistics64_data_t`, `vm_kernel_page_size` | The request count derives from the imported structure size, not a fixed byte count; failure is checked. Active + wired + compressed memory is an estimate, not necessarily Activity Monitor's exact accounting. Validate values on macOS 27. |
-| System info / swap | `sysctlbyname`: `machdep.cpu.brand_string`, `hw.logicalcpu`, `hw.physicalcpu`, `hw.perflevel0.logicalcpu`, `hw.perflevel1.logicalcpu`, `hw.memsize`, `hw.model`, `vm.swapusage` | Calls check failure; static info has fallbacks or optional values. Availability and the meaning of performance-level keys remain machine-dependent. No network-routing sysctls are used. Failed monitor reads leave the previous value unchanged, so a zero or unchanged gauge alone does not prove success. |
-| Disk I/O | Temporary file; `open`, `fcntl(F_NOCACHE)`, `write`, `read`, `lseek`, `fsync`, `close`, `unlink` | Documented Darwin/POSIX path; no macOS 27-specific replacement identified. `F_NOCACHE` requests filesystem cache bypass, not hardware-cache flushing. Existing unchecked `fcntl`, seek and sync results prevent static certification of cache bypass or successful I/O. Verify syscall results and cleanup on macOS 27. |
+| GPU | Every buffer size (64–1024 MB) with `MTL_DEBUG_LAYER=1` and `MTL_SHADER_VALIDATION=1` | No validation messages; all command buffers complete. Element counts are multiples of 256 for every size, so the unguarded kernel never reads past the buffer. |
+| CPU monitor | Idle and with all 18 cores loaded | All 18 cores reported; 99 % overall, ≥ 98 % per core under load. |
+| Memory monitor | Compared with `vm_stat` (active + wired + compressor) | 37.4 GB vs 37.9 GB, sampled moments apart. |
+| Swap | Compared with `sysctl vm.swapusage` | 16.51 GB vs 16 908.56 MB. Matches. |
+| Disk | All four modes, 256 MB | Finite throughput, no errors logged. |
+| Disk cleanup | `kill -9` during a 1 GB write | The file has no name in the temp directory while it is open, and nothing is left after the kill. |
+| Stop / restart | Rapid stop → start on every engine | No stray workers or stale UI updates; no Swift 6 runtime isolation traps. |
+| Releases | v1.0.0 and v1.1.0 launched for 8 s | Both open their window and stay running. |
 
-The disk error-handling limitations and shader dispatch assumption are present
-in the reviewed baseline; no evidence establishes a new macOS 27 regression.
-This patch changes documentation only. It does not add speculative API swaps,
-entitlements, build-setting changes or an unrelated engine rewrite.
+## Findings from the static review, resolved
 
-## Pending validation on an Apple Silicon Mac
+The static review flagged unchecked results and silent failures. These are now
+handled:
 
-Use macOS 27 and the selected Xcode 27 installation. Install XcodeGen and the
-Metal Toolchain component for that Xcode first. Record the exact OS, Xcode,
-SDK, XcodeGen and GPU versions with the results.
+- Disk: per-run temp file created with `mkstemp` and unlinked right away; write,
+  read, `F_NOCACHE` and `F_FULLFSYNC` failures are logged and reset the card;
+  free space is checked before starting. Write timing uses `F_FULLFSYNC`, because
+  `fsync` does not flush the drive's write cache.
+- GPU: a failed command buffer or encoder stops the run with a log entry instead
+  of looping silently.
+- Concurrency: Swift 6 strict checking; each run has its own `Sendable` stop flag.
+
+## Reproducing
 
 ```bash
-sw_vers
-xcodebuild -version
-xcrun --sdk macosx --show-sdk-version
-xcrun --find metal
-xcodegen --version
-xcodegen generate
-git diff -- Redline.xcodeproj
-xcodebuild -project Redline.xcodeproj -scheme Redline \
-  -configuration Debug -destination 'platform=macOS,arch=arm64' \
-  -derivedDataPath DerivedData/macos27-debug CODE_SIGNING_ALLOWED=NO build
+sw_vers && xcodebuild -version && xcrun --sdk macosx --show-sdk-version
+xcrun --find metal && xcodegen --version
+xcodegen generate && git diff --exit-code -- Redline.xcodeproj
 xcodebuild -project Redline.xcodeproj -scheme Redline \
   -configuration Release -destination 'platform=macOS,arch=arm64' \
   -derivedDataPath DerivedData/macos27-release CODE_SIGNING_ALLOWED=NO build
 ```
 
-Review any generated-project diff before keeping it; generation alone is not
-proof of compatibility. Check the build logs for Swift, Darwin/Mach and Metal
-errors or deprecations, and verify that the app contains `default.metallib`.
-
-On macOS 27, run the built app and check:
-
-- GPU start/stop and every selectable buffer size with Metal API and Shader
-  Validation enabled; confirm successful command-buffer completion, no
-  out-of-bounds accesses and a responding UI.
-- CPU, memory and swap sampling at idle and under controlled load; inspect the
-  Mach/sysctl results and returned sizes, not only the displayed gauges. Zero
-  swap is valid when the OS has not allocated swap.
-- All four disk modes at a small file size; inspect `F_NOCACHE`, seek, read/write
-  and sync results, confirm finite throughput and temporary-file removal after
-  the worker finishes. Check start/stop, Stop All and quitting during load.
-- Launch the Xcode-27-built app on macOS 14 as a separate back-deployment check
-  before extending the compatibility claim for a future distributed build.
-
-The existing v1.0.0 download needs its own macOS 27 smoke test if the README is
-to claim compatibility for that release. Record build and runtime results before
-changing the status above. No release is part of this review.
+For the GPU check, launch the built app with `MTL_DEBUG_LAYER=1` and
+`MTL_SHADER_VALIDATION=1` set, run the GPU card at each buffer size, and watch the
+console for validation messages.
 
 ## Apple references
 
@@ -86,9 +84,4 @@ changing the status above. No release is part of this review.
 - [Compute pipeline threadgroup limit](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/maxtotalthreadsperthreadgroup)
 - [host_processor_info](https://developer.apple.com/documentation/kernel/1502854-host_processor_info)
 - [host_statistics64](https://developer.apple.com/documentation/kernel/1502863-host_statistics64)
-- [Determining system capabilities with sysctlbyname](https://developer.apple.com/documentation/kernel/1387446-sysctlbyname/determining_system_capabilities)
 - [fcntl manual (archived)](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/fcntl.2.html)
-- [fsync manual (archived)](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/fsync.2.html)
-
-Archived manuals establish API intent; they do not substitute for checking the
-macOS 27 SDK headers and actual syscall results.
