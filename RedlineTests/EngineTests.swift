@@ -97,8 +97,7 @@ struct EngineTests {
 
     // MARK: - GPU
 
-    /// CI runners are VMs without a usable GPU, so this only runs on real hardware.
-    @Test(.enabled(if: MTLCreateSystemDefaultDevice() != nil && ProcessInfo.processInfo.environment["CI"] == nil))
+    @Test(.enabled(if: MTLCreateSystemDefaultDevice() != nil, "needs a Metal device"))
     func gpuReportsIterations() async {
         let gpu = GPUStressEngine(log: log)
         gpu.bufferMB = 64
