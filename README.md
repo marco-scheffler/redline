@@ -83,6 +83,34 @@ Watch the per-core grid and the CPU / memory / swap gauges to see the impact as 
 the v1.0.0 and v1.1.0 releases. Running an Xcode 27 build on macOS 14 is not yet
 verified. See the [compatibility review](docs/macos-27-compatibility.md) for details.
 
+## Development
+
+Run the tests with ⌘U in Xcode, or from the command line:
+
+```bash
+xcodebuild test -project Redline.xcodeproj -scheme Redline \
+  -destination 'platform=macOS,arch=arm64'
+```
+
+This runs two suites:
+
+- **RedlineTests** exercises the stress engines and the monitor on the real hardware
+  (about 15 seconds).
+- **RedlineUITests** clicks through the window and takes over the mouse and keyboard
+  for about a minute. To skip it, add `-only-testing:RedlineTests`.
+
+CI builds and runs both suites on every push to `main` and on every pull request.
+
+To publish a release, push a version tag:
+
+```bash
+git tag -a v1.2.0 -m "Redline 1.2.0"
+git push origin v1.2.0
+```
+
+The release workflow runs the tests, builds the app with the version taken from the
+tag, and publishes `Redline-1.2.0.zip` as a GitHub release.
+
 ## Notes
 
 Redline deliberately drives your hardware hard, which raises temperatures and fan
