@@ -42,6 +42,18 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.marco-scheffler.redline.tests
         GENERATE_INFOPLIST_FILE: YES
         MACOSX_DEPLOYMENT_TARGET: "14.0"
+  RedlineUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - path: RedlineUITests
+    dependencies:
+      - target: Redline
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.marco-scheffler.redline.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
 schemes:
   Redline:
     build:
@@ -53,3 +65,4 @@ schemes:
       config: Debug
       targets:
         - RedlineTests
+        - RedlineUITests

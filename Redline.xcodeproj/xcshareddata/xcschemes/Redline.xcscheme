@@ -50,6 +50,17 @@
                ReferencedContainer = "container:Redline.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "428CAB24E865D3B732CB62FA"
+               BuildableName = "RedlineUITests.xctest"
+               BlueprintName = "RedlineUITests"
+               ReferencedContainer = "container:Redline.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>
