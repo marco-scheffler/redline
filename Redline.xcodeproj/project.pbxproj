@@ -21,6 +21,7 @@
 		544EDCD5585988D3FDD57A5C /* DiskStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E8E3DD1EE11B733AF4FD2 /* DiskStressEngine.swift */; };
 		57790F357FBE4AD22E89A877 /* RedlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C065B7E1CF678C3D2F83D59D /* RedlineApp.swift */; };
 		59DA64CA09A38C87235B60B2 /* GPUStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEC1613358AC5203DF72946 /* GPUStressEngine.swift */; };
+		5F130D535DDBBC7235A972B1 /* ControlsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879FDE476D26E2E2C6F42BDE /* ControlsUITests.swift */; };
 		65F7F39BA86D2B04ECF41F2C /* IconTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4616691C3DDDDE9B813EBA3 /* IconTile.swift */; };
 		7833B337408155905D975A47 /* CPUStressEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE14651EFE9E2FEA2E6C147 /* CPUStressEngine.swift */; };
 		99FB57D935E3DE69B9116D06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E97DF152F0FDB5FCE45AF461 /* Assets.xcassets */; };
@@ -41,6 +42,13 @@
 			remoteGlobalIDString = 78E2D3ED9A80CB97FFD0EA18;
 			remoteInfo = Redline;
 		};
+		7BF4656E8820B793515CF060 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDBA1FFFB56DFE185BB8A607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 78E2D3ED9A80CB97FFD0EA18;
+			remoteInfo = Redline;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -49,12 +57,14 @@
 		1AC17EAADCBE3AAB9E82A950 /* RedlineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedlineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A60FF8FA8646935761833BC /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		2B886B9BF9C937CB5492853A /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		41AFCF92764C6F452F90844F /* RedlineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedlineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B4266B0FD6FBEECAE1E79B8 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		778EC9E8E777627857E105E5 /* MemoryStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryStressEngine.swift; sourceTree = "<group>"; };
 		77E369CE6531396BD0644322 /* Redline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Redline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD3EAE60E879FF9EA91937F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7C0A67B3E6C32A0AA915BCD4 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		80EDBA1F64E899C2FC412FA2 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		879FDE476D26E2E2C6F42BDE /* ControlsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsUITests.swift; sourceTree = "<group>"; };
 		92D091941512A15806E8CC9A /* DiskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCardView.swift; sourceTree = "<group>"; };
 		9CE14651EFE9E2FEA2E6C147 /* CPUStressEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUStressEngine.swift; sourceTree = "<group>"; };
 		9D706DD7125F4584463F1762 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -134,6 +144,7 @@
 			children = (
 				77E369CE6531396BD0644322 /* Redline.app */,
 				1AC17EAADCBE3AAB9E82A950 /* RedlineTests.xctest */,
+				41AFCF92764C6F452F90844F /* RedlineUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,11 +179,20 @@
 			path = Monitor;
 			sourceTree = "<group>";
 		};
+		C83C48BD7553724C77BD2D9A /* RedlineUITests */ = {
+			isa = PBXGroup;
+			children = (
+				879FDE476D26E2E2C6F42BDE /* ControlsUITests.swift */,
+			);
+			path = RedlineUITests;
+			sourceTree = "<group>";
+		};
 		F1C79CFD64D9F84A344D20BF = {
 			isa = PBXGroup;
 			children = (
 				B2BCA15ED12DBCA572F8165B /* Redline */,
 				859B4D19E31ACE649F2A3526 /* RedlineTests */,
+				C83C48BD7553724C77BD2D9A /* RedlineUITests */,
 				4707618540E3D744E35D6824 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -180,6 +200,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		428CAB24E865D3B732CB62FA /* RedlineUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6B24A0D699E59BE9B0CA877 /* Build configuration list for PBXNativeTarget "RedlineUITests" */;
+			buildPhases = (
+				22EA9B86C92A82B36D45725F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E308D3F5A4801BCBDA6C298D /* PBXTargetDependency */,
+			);
+			name = RedlineUITests;
+			packageProductDependencies = (
+			);
+			productName = RedlineUITests;
+			productReference = 41AFCF92764C6F452F90844F /* RedlineUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		78E2D3ED9A80CB97FFD0EA18 /* Redline */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 39295FF4190F58CCA17A4229 /* Build configuration list for PBXNativeTarget "Redline" */;
@@ -225,6 +263,11 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					428CAB24E865D3B732CB62FA = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+						TestTargetID = 78E2D3ED9A80CB97FFD0EA18;
+					};
 					78E2D3ED9A80CB97FFD0EA18 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Manual;
@@ -251,6 +294,7 @@
 			targets = (
 				78E2D3ED9A80CB97FFD0EA18 /* Redline */,
 				7A8A7AD9C3C8334E35E541ED /* RedlineTests */,
+				428CAB24E865D3B732CB62FA /* RedlineUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -272,6 +316,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7436D73B1C8F313B976C774 /* EngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22EA9B86C92A82B36D45725F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F130D535DDBBC7235A972B1 /* ControlsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +363,11 @@
 			isa = PBXTargetDependency;
 			target = 78E2D3ED9A80CB97FFD0EA18 /* Redline */;
 			targetProxy = 018EF2FA91B345195BA6DAF0 /* PBXContainerItemProxy */;
+		};
+		E308D3F5A4801BCBDA6C298D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 78E2D3ED9A80CB97FFD0EA18 /* Redline */;
+			targetProxy = 7BF4656E8820B793515CF060 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -352,6 +409,24 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Redline.app/Contents/MacOS/Redline";
 			};
 			name = Release;
+		};
+		31EC9B5B923C4A63B2EFCF43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.marco-scheffler.redline.uitests";
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = Redline;
+			};
+			name = Debug;
 		};
 		5DEAE7358B0AEE1BEDDD6D49 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -524,6 +599,24 @@
 			};
 			name = Debug;
 		};
+		ED77D52487317F589F481442 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.marco-scheffler.redline.uitests";
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = Redline;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -550,6 +643,15 @@
 			buildConfigurations = (
 				D8EE4F271AB54937AF4C0610 /* Debug */,
 				15774D45DD03811CDCDB3627 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E6B24A0D699E59BE9B0CA877 /* Build configuration list for PBXNativeTarget "RedlineUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				31EC9B5B923C4A63B2EFCF43 /* Debug */,
+				ED77D52487317F589F481442 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -8,10 +8,10 @@ struct ContentView: View {
             ScrollView {
                 VStack(spacing: 12) {
                     HeaderView(info: model.info)
-                    CPUCardView(engine: model.cpu)
-                    GPUCardView(engine: model.gpu)
-                    MemoryCardView(engine: model.memory)
-                    DiskCardView(engine: model.disk)
+                    CPUCardView(engine: model.cpu).accessibilityCard("cpu")
+                    GPUCardView(engine: model.gpu).accessibilityCard("gpu")
+                    MemoryCardView(engine: model.memory).accessibilityCard("memory")
+                    DiskCardView(engine: model.disk).accessibilityCard("disk")
                     MonitorCardView(monitor: model.monitor)
                     ActivityLogView(log: model.log)
                 }
@@ -26,6 +26,14 @@ struct ContentView: View {
         }
         .background(VisualEffectView().ignoresSafeArea())
         .frame(minWidth: 720, minHeight: 820)
+    }
+}
+
+private extension View {
+    /// Groups a card's controls under one identifier, so UI tests can tell
+    /// the four identical Start buttons apart.
+    func accessibilityCard(_ id: String) -> some View {
+        accessibilityElement(children: .contain).accessibilityIdentifier(id)
     }
 }
 
