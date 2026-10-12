@@ -28,13 +28,17 @@ final class ControlsUITests: XCTestCase {
         gpu.radioButtons["64"].click()
         memory.radioButtons["1"].click()
         disk.radioButtons["256"].click()
-        XCTAssertTrue(memory.radioButtons["1"].isSelected, "memory picker did not take the selection")
 
         app.buttons["Run All Tests"].click()
         for card in cards {
             XCTAssertTrue(card.buttons["Stop"].waitForExistence(timeout: 10), "\(card.identifier) did not start")
         }
         XCTAssertFalse(memory.radioButtons["2"].isEnabled, "pickers stay editable while running")
+
+        // The engines log the values they actually started with.
+        for entry in ["CPU: 1 cores, Mixed", "GPU: starting (64 MB)…", "RAM: 1 GB", "Disk: Seq W, 256 MB"] {
+            XCTAssertTrue(app.staticTexts[entry].waitForExistence(timeout: 5), "missing log entry: \(entry)")
+        }
         XCTAssertTrue(memory.staticTexts["1024 MB active"].waitForExistence(timeout: 30))
 
         app.buttons["Stop All"].click()
