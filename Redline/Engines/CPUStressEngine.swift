@@ -2,16 +2,17 @@ import Foundation
 import Darwin
 
 /// Saturates the CPU with N worker threads running float / integer / mixed math.
-final class CPUStressEngine: ObservableObject {
-    @Published private(set) var isRunning = false
-    @Published var cores: Int
-    @Published var workload: CPUWorkload = .mixed
-    @Published var duration: CPUDuration = .unlimited
-    @Published private(set) var statusText = "Idle"
+@MainActor @Observable
+final class CPUStressEngine {
+    private(set) var isRunning = false
+    var cores: Int
+    var workload: CPUWorkload = .mixed
+    var duration: CPUDuration = .unlimited
+    private(set) var statusText = "Idle"
 
     let maxCores: Int
     private let log: ActivityLog
-    private let stopFlag = AtomicFlag()
+    private var stopFlag: AtomicFlag?
     private var threads: [Thread] = []
     private var autoStop: DispatchWorkItem?
 
@@ -23,7 +24,8 @@ final class CPUStressEngine: ObservableObject {
 
     func start() {
         guard !isRunning else { return }
-        stopFlag.clear()
+        let stopFlag = AtomicFlag()
+        self.stopFlag = stopFlag
         let count = max(1, min(cores, maxCores))
         let mode = workload
 
@@ -52,14 +54,15 @@ final class CPUStressEngine: ObservableObject {
         guard isRunning else { return }
         autoStop?.cancel()
         autoStop = nil
-        stopFlag.set()
+        stopFlag?.set()
+        stopFlag = nil
         threads.removeAll()
         isRunning = false
         statusText = "Idle"
         log.log("CPU: stopped")
     }
 
-    private static func run(mode: CPUWorkload, stop: AtomicFlag) {
+    nonisolated private static func run(mode: CPUWorkload, stop: AtomicFlag) {
         var x = 1.5
         var n: UInt64 = 0x9E3779B97F4A7C15
         while !stop.isSet {

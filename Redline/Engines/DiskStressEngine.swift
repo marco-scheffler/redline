@@ -3,17 +3,18 @@ import Darwin
 
 /// Sequential / random read & write throughput test against a temp file,
 /// bypassing the unified buffer cache with F_NOCACHE.
-final class DiskStressEngine: ObservableObject {
-    @Published private(set) var isRunning = false
-    @Published var sizeMB: Int = 1024
-    @Published var mode: DiskMode = .seqWrite
-    @Published private(set) var speedMBps: Double = 0
-    @Published private(set) var statusText = "Idle"
+@MainActor @Observable
+final class DiskStressEngine {
+    private(set) var isRunning = false
+    var sizeMB: Int = 1024
+    var mode: DiskMode = .seqWrite
+    private(set) var speedMBps: Double = 0
+    private(set) var statusText = "Idle"
 
     private let log: ActivityLog
-    private let stopFlag = AtomicFlag()
+    private var stopFlag: AtomicFlag?
     private var thread: Thread?
-    private let path = (NSTemporaryDirectory() as NSString).appendingPathComponent("stress_disk.tmp")
+    private let directory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
 
     init(log: ActivityLog) {
         self.log = log
@@ -21,14 +22,24 @@ final class DiskStressEngine: ObservableObject {
 
     func start() {
         guard !isRunning else { return }
-        stopFlag.clear()
         let size = sizeMB
         let mode = self.mode
+
+        // Keep 1 GB headroom so the test never fills the disk.
+        let free = (try? directory.resourceValues(forKeys: [.volumeAvailableCapacityKey]))?
+            .volumeAvailableCapacity
+        if let free, free < (size + 1024) * 1024 * 1024 {
+            log.log("Disk: not enough free space for \(size) MB (\(free / (1024 * 1024)) MB free)")
+            return
+        }
+
+        let stopFlag = AtomicFlag()
+        self.stopFlag = stopFlag
         isRunning = true
         statusText = "\(mode.rawValue) · \(size) MB"
         log.log("Disk: \(mode.rawValue), \(size) MB")
 
-        let thread = Thread { [weak self] in self?.run(sizeMB: size, mode: mode) }
+        let thread = Thread { [weak self] in self?.run(sizeMB: size, mode: mode, stop: stopFlag) }
         thread.qualityOfService = .userInitiated
         self.thread = thread
         thread.start()
@@ -36,7 +47,8 @@ final class DiskStressEngine: ObservableObject {
 
     func stop() {
         guard isRunning else { return }
-        stopFlag.set()
+        stopFlag?.set()
+        stopFlag = nil
         thread = nil
         isRunning = false
         speedMBps = 0
@@ -44,105 +56,134 @@ final class DiskStressEngine: ObservableObject {
         log.log("Disk: stopped")
     }
 
-    private func run(sizeMB: Int, mode: DiskMode) {
+    nonisolated private func run(sizeMB: Int, mode: DiskMode, stop: AtomicFlag) {
         let blockSize = 1024 * 1024
         let total = sizeMB * blockSize
-        defer { unlink(path) }
+
+        guard let fd = makeTempFile() else {
+            fail("Disk: cannot create temp file", stop: stop)
+            return
+        }
+        defer { close(fd) }
 
         if mode.isWrite {
-            writeLoop(total: total, blockSize: blockSize, random: mode.isRandom)
-        } else {
-            prepareFile(total: total, blockSize: blockSize)
-            if !stopFlag.isSet {
-                readLoop(total: total, blockSize: blockSize, random: mode.isRandom)
-            }
+            writeLoop(fd: fd, total: total, blockSize: blockSize, random: mode.isRandom, stop: stop)
+        } else if prepareFile(fd: fd, total: total, blockSize: blockSize, stop: stop) {
+            readLoop(fd: fd, total: total, blockSize: blockSize, random: mode.isRandom, stop: stop)
         }
     }
 
-    private func openNoCache(flags: Int32) -> Int32 {
-        let fd = open(path, flags, 0o644)
-        if fd >= 0 { _ = fcntl(fd, F_NOCACHE, 1) }
+    /// Creates a uniquely named file and unlinks it right away: it lives only as long as
+    /// the descriptor, so concurrent runs can't collide and a crash leaves nothing behind.
+    nonisolated private func makeTempFile() -> Int32? {
+        var template = Array(directory.appendingPathComponent("redline_disk.XXXXXX").path.utf8CString)
+        let fd = mkstemp(&template)
+        guard fd >= 0 else { return nil }
+        unlink(template)
+        _ = fcntl(fd, F_NOCACHE, 1)
         return fd
     }
 
-    private func prepareFile(total: Int, blockSize: Int) {
-        DispatchQueue.main.async { self.statusText = "Preparing \(total / (1024 * 1024)) MB…" }
-        let fd = openNoCache(flags: O_WRONLY | O_CREAT | O_TRUNC)
-        guard fd >= 0 else { return }
-        defer { close(fd) }
+    nonisolated private func prepareFile(fd: Int32, total: Int, blockSize: Int, stop: AtomicFlag) -> Bool {
+        stop.onMainUnlessSet { self.statusText = "Preparing \(total / (1024 * 1024)) MB…" }
         let data = [UInt8](repeating: 0xA5, count: blockSize)
         var written = 0
-        data.withUnsafeBytes { raw in
-            while written < total && !stopFlag.isSet {
+        let ok = data.withUnsafeBytes { raw -> Bool in
+            while written < total && !stop.isSet {
                 let n = write(fd, raw.baseAddress, blockSize)
-                if n <= 0 { break }
+                if n < 0 { return false }
                 written += n
             }
+            return true
         }
-        fsync(fd)
+        guard ok else {
+            fail("Disk: write failed (\(String(cString: strerror(errno))))", stop: stop)
+            return false
+        }
+        _ = fcntl(fd, F_FULLFSYNC)
+        return !stop.isSet
     }
 
-    private func writeLoop(total: Int, blockSize: Int, random: Bool) {
-        DispatchQueue.main.async {
+    nonisolated private func writeLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
+        stop.onMainUnlessSet {
             self.statusText = "\(random ? "Random" : "Sequential") write…"
         }
         let data = [UInt8](repeating: 0x5A, count: blockSize)
-        while !stopFlag.isSet {
-            let fd = openNoCache(flags: O_WRONLY | O_CREAT | O_TRUNC)
-            guard fd >= 0 else { return }
+        while !stop.isSet {
+            lseek(fd, 0, SEEK_SET)
             var written = 0
             let startTime = Date()
-            data.withUnsafeBytes { raw in
-                while written < total && !stopFlag.isSet {
+            let ok = data.withUnsafeBytes { raw -> Bool in
+                while written < total && !stop.isSet {
                     if random {
                         let offset = off_t(Int.random(in: 0...max(0, total - blockSize)))
                         lseek(fd, offset, SEEK_SET)
                     }
                     let n = write(fd, raw.baseAddress, blockSize)
-                    if n <= 0 { break }
+                    if n < 0 { return false }
                     written += n
                 }
+                return true
             }
-            fsync(fd)
-            close(fd)
-            report(bytes: written, since: startTime)
+            guard ok else {
+                fail("Disk: write failed (\(String(cString: strerror(errno))))", stop: stop)
+                return
+            }
+            // fsync alone leaves data in the drive's write cache; only F_FULLFSYNC
+            // makes the timing cover the trip to the flash.
+            _ = fcntl(fd, F_FULLFSYNC)
+            report(bytes: written, since: startTime, stop: stop)
         }
     }
 
-    private func readLoop(total: Int, blockSize: Int, random: Bool) {
-        DispatchQueue.main.async {
+    nonisolated private func readLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
+        stop.onMainUnlessSet {
             self.statusText = "\(random ? "Random" : "Sequential") read…"
         }
         var buffer = [UInt8](repeating: 0, count: blockSize)
-        while !stopFlag.isSet {
-            let fd = openNoCache(flags: O_RDONLY)
-            guard fd >= 0 else { return }
+        while !stop.isSet {
+            lseek(fd, 0, SEEK_SET)
             var read = 0
             let startTime = Date()
-            buffer.withUnsafeMutableBytes { raw in
-                while read < total && !stopFlag.isSet {
+            let ok = buffer.withUnsafeMutableBytes { raw -> Bool in
+                while read < total && !stop.isSet {
                     if random {
                         let offset = off_t(Int.random(in: 0...max(0, total - blockSize)))
                         lseek(fd, offset, SEEK_SET)
                     }
                     let n = Darwin.read(fd, raw.baseAddress, blockSize)
-                    if n <= 0 {
+                    if n < 0 { return false }
+                    if n == 0 {
                         lseek(fd, 0, SEEK_SET)
                         if !random { break }
                         continue
                     }
                     read += n
                 }
+                return true
             }
-            close(fd)
-            report(bytes: read, since: startTime)
+            guard ok else {
+                fail("Disk: read failed (\(String(cString: strerror(errno))))", stop: stop)
+                return
+            }
+            report(bytes: read, since: startTime, stop: stop)
         }
     }
 
-    private func report(bytes: Int, since start: Date) {
+    nonisolated private func report(bytes: Int, since start: Date, stop: AtomicFlag) {
         let elapsed = Date().timeIntervalSince(start)
         guard elapsed > 0 else { return }
         let mbps = (Double(bytes) / (1024 * 1024)) / elapsed
-        DispatchQueue.main.async { self.speedMBps = mbps }
+        stop.onMainUnlessSet { self.speedMBps = mbps }
+    }
+
+    /// Logs a failure and returns the card to idle, unless the run was already stopped.
+    nonisolated private func fail(_ message: String, stop: AtomicFlag) {
+        log.log(message)
+        stop.onMainUnlessSet {
+            self.isRunning = false
+            self.speedMBps = 0
+            self.statusText = "Idle"
+        }
     }
 }

@@ -2,12 +2,12 @@ import SwiftUI
 
 @main
 struct RedlineApp: App {
-    @StateObject private var model = AppModel()
+    @State private var model = AppModel()
 
     var body: some Scene {
         WindowGroup("Redline") {
             ContentView()
-                .environmentObject(model)
+                .environment(model)
         }
         .windowResizability(.contentMinSize)
         .defaultSize(width: 780, height: 940)

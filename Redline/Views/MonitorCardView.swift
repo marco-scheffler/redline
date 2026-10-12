@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MonitorCardView: View {
-    @ObservedObject var monitor: SystemMonitor
+    let monitor: SystemMonitor
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 4)
 
@@ -12,6 +12,8 @@ struct MonitorCardView: View {
                     IconTile(symbol: "gauge.with.dots.needle.bottom.50percent",
                              tint: Accent.monitor, active: false, size: 24)
                     Text("System Monitor").font(.system(size: 15, weight: .semibold))
+                    Spacer()
+                    ThermalBadge(state: monitor.thermalState)
                 }
 
                 MeterRow(label: "CPU", tint: .blue,
@@ -51,6 +53,29 @@ struct MonitorCardView: View {
     private func bytes(_ value: UInt64) -> String {
         let gb = Double(value) / 1_073_741_824
         return String(format: "%.1f GB", gb)
+    }
+}
+
+/// Thermal pressure as macOS reports it; turns orange / red once the system throttles.
+private struct ThermalBadge: View {
+    let state: ProcessInfo.ThermalState
+
+    private var tint: Color {
+        switch state {
+        case .nominal: return .green
+        case .fair: return .yellow
+        case .serious: return .orange
+        default: return .red
+        }
+    }
+
+    var body: some View {
+        Label("Thermal: \(state.label)", systemImage: "thermometer.medium")
+            .font(.system(size: 11, weight: .medium))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(tint.opacity(0.15), in: Capsule())
     }
 }
 

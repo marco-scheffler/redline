@@ -1,37 +1,56 @@
 import Foundation
 import Darwin
 
-/// Samples live system load (CPU per-core, memory, swap) ~1 Hz using Mach/sysctl.
+/// Samples live system load (CPU per-core, memory, swap) ~1 Hz using Mach/sysctl,
+/// and tracks the thermal state macOS reports.
 /// Replaces the Python version's psutil dependency with native APIs.
-final class SystemMonitor: ObservableObject {
-    @Published private(set) var overallCPU: Double = 0          // 0…100
-    @Published private(set) var perCoreCPU: [Double] = []        // 0…100 each
-    @Published private(set) var memoryFraction: Double = 0       // 0…1
-    @Published private(set) var memoryUsedBytes: UInt64 = 0
-    @Published private(set) var swapFraction: Double = 0         // 0…1
-    @Published private(set) var swapUsedBytes: UInt64 = 0
+@MainActor @Observable
+final class SystemMonitor {
+    private(set) var overallCPU: Double = 0          // 0…100
+    private(set) var perCoreCPU: [Double] = []        // 0…100 each
+    private(set) var memoryFraction: Double = 0       // 0…1
+    private(set) var memoryUsedBytes: UInt64 = 0
+    private(set) var swapFraction: Double = 0         // 0…1
+    private(set) var swapUsedBytes: UInt64 = 0
+    private(set) var thermalState = ProcessInfo.processInfo.thermalState
 
     let totalRAM: UInt64
 
+    private let log: ActivityLog
     private var timer: Timer?
+    private var thermalObserver: NSObjectProtocol?
     private var previousTicks: [(user: UInt32, system: UInt32, idle: UInt32, nice: UInt32)] = []
 
-    init(totalRAM: UInt64) {
+    init(totalRAM: UInt64, log: ActivityLog) {
         self.totalRAM = totalRAM
+        self.log = log
     }
 
     func start() {
         sampleCPU()  // prime the tick baseline
         let timer = Timer(timeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.sample()
+            MainActor.assumeIsolated { self?.sample() }
         }
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer
+
+        thermalObserver = NotificationCenter.default.addObserver(
+            forName: ProcessInfo.thermalStateDidChangeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated { self?.updateThermalState() }
+        }
     }
 
     func stop() {
         timer?.invalidate()
         timer = nil
+        if let thermalObserver { NotificationCenter.default.removeObserver(thermalObserver) }
+        thermalObserver = nil
+    }
+
+    private func updateThermalState() {
+        thermalState = ProcessInfo.processInfo.thermalState
+        log.log("Thermal state: \(thermalState.label)")
     }
 
     private func sample() {
@@ -86,10 +105,8 @@ final class SystemMonitor: ObservableObject {
         previousTicks = newTicks
         let overall = totalSum > 0 ? (usedSum / totalSum) * 100.0 : 0
 
-        DispatchQueue.main.async {
-            self.perCoreCPU = perCore
-            self.overallCPU = overall
-        }
+        perCoreCPU = perCore
+        overallCPU = overall
     }
 
     // MARK: - Memory
@@ -104,17 +121,15 @@ final class SystemMonitor: ObservableObject {
         }
         guard result == KERN_SUCCESS else { return }
 
-        let pageSize = UInt64(vm_kernel_page_size)
+        let pageSize = UInt64(getpagesize())
         let active = UInt64(stats.active_count) * pageSize
         let wired = UInt64(stats.wire_count) * pageSize
         let compressed = UInt64(stats.compressor_page_count) * pageSize
         let used = active + wired + compressed
         let fraction = totalRAM > 0 ? min(1.0, Double(used) / Double(totalRAM)) : 0
 
-        DispatchQueue.main.async {
-            self.memoryUsedBytes = used
-            self.memoryFraction = fraction
-        }
+        memoryUsedBytes = used
+        memoryFraction = fraction
     }
 
     // MARK: - Swap
@@ -127,9 +142,19 @@ final class SystemMonitor: ObservableObject {
         let total = usage.xsu_total
         let fraction = total > 0 ? min(1.0, Double(used) / Double(total)) : 0
 
-        DispatchQueue.main.async {
-            self.swapUsedBytes = used
-            self.swapFraction = fraction
+        swapUsedBytes = used
+        swapFraction = fraction
+    }
+}
+
+extension ProcessInfo.ThermalState {
+    var label: String {
+        switch self {
+        case .nominal: return "Nominal"
+        case .fair: return "Fair"
+        case .serious: return "Serious"
+        case .critical: return "Critical"
+        @unknown default: return "Unknown"
         }
     }
 }
