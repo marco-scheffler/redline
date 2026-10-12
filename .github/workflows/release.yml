@@ -16,6 +16,15 @@ jobs:
       - name: Install Metal toolchain
         run: xcrun metal --version >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
 
+      # Never publish a build whose tests fail.
+      - name: Test
+        run: |
+          xcodebuild test \
+            -project Redline.xcodeproj \
+            -scheme Redline \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath test-build
+
       # The tag is the single source of truth for the version: v1.2.0 → 1.2.0.
       - name: Build
         run: |
