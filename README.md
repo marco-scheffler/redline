@@ -47,9 +47,11 @@ subsystem on demand and shows you exactly what's happening, in real time.
 
 1. Grab the latest **Redline-x.y.z.zip** from
    [Releases](https://github.com/marco-scheffler/redline/releases/latest).
-2. Unzip and drag `Redline.app` into `/Applications`.
-3. The build is unsigned, so on first launch right-click the app → **Open**, then
-   confirm once to let Gatekeeper through.
+2. Unzip and drag `Redline.app` into `/Applications`, then open it.
+
+Releases from 1.2.0 on are signed with a Developer ID and notarized by Apple. Older
+releases are unsigned: on first launch right-click the app → **Open**, then confirm
+once to let Gatekeeper through.
 
 ### Option B — Build from source
 
@@ -109,7 +111,20 @@ git push origin v1.2.0
 ```
 
 The release workflow runs the tests, builds the app with the version taken from the
-tag, and publishes `Redline-1.2.0.zip` as a GitHub release.
+tag, signs it with the Developer ID certificate, notarizes it with Apple and publishes
+`Redline-1.2.0.zip` as a GitHub release. Running the workflow manually (Actions →
+Release → Run workflow) does the same without publishing, and attaches the zip to the
+run instead.
+
+Signing needs these repository secrets:
+
+| Secret | Content |
+| --- | --- |
+| `DEVELOPER_ID_P12_BASE64` | Developer ID Application certificate with private key, as base64-encoded `.p12` |
+| `DEVELOPER_ID_P12_PASSWORD` | Password of that `.p12` |
+| `NOTARY_KEY_P8_BASE64` | App Store Connect API key (`AuthKey_….p8`), base64-encoded |
+| `NOTARY_KEY_ID` | Key ID of that API key |
+| `NOTARY_ISSUER_ID` | Issuer ID shown above the API key list in App Store Connect |
 
 ## Notes
 
