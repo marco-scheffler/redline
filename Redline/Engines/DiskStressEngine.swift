@@ -60,10 +60,7 @@ final class DiskStressEngine {
         let blockSize = 1024 * 1024
         let total = sizeMB * blockSize
 
-        guard let fd = makeTempFile() else {
-            fail("Disk: cannot create temp file", stop: stop)
-            return
-        }
+        guard let fd = makeTempFile(stop: stop) else { return }
         defer { close(fd) }
 
         if mode.isWrite {
@@ -75,13 +72,31 @@ final class DiskStressEngine {
 
     /// Creates a uniquely named file and unlinks it right away: it lives only as long as
     /// the descriptor, so concurrent runs can't collide and a crash leaves nothing behind.
-    nonisolated private func makeTempFile() -> Int32? {
+    nonisolated private func makeTempFile(stop: AtomicFlag) -> Int32? {
         var template = Array(directory.appendingPathComponent("redline_disk.XXXXXX").path.utf8CString)
         let fd = mkstemp(&template)
-        guard fd >= 0 else { return nil }
+        guard fd >= 0 else {
+            fail("Disk: cannot create temp file (\(String(cString: strerror(errno))))", stop: stop)
+            return nil
+        }
         unlink(template)
-        _ = fcntl(fd, F_NOCACHE, 1)
+        // Without F_NOCACHE the test would measure the page cache, not the disk.
+        guard fcntl(fd, F_NOCACHE, 1) != -1 else {
+            fail("Disk: cannot bypass the file cache (\(String(cString: strerror(errno))))", stop: stop)
+            close(fd)
+            return nil
+        }
         return fd
+    }
+
+    /// fsync alone leaves data in the drive's write cache; only F_FULLFSYNC
+    /// makes the timing cover the trip to the flash.
+    nonisolated private func flush(fd: Int32, stop: AtomicFlag) -> Bool {
+        guard fcntl(fd, F_FULLFSYNC) != -1 else {
+            fail("Disk: flush failed (\(String(cString: strerror(errno))))", stop: stop)
+            return false
+        }
+        return true
     }
 
     nonisolated private func prepareFile(fd: Int32, total: Int, blockSize: Int, stop: AtomicFlag) -> Bool {
@@ -100,8 +115,7 @@ final class DiskStressEngine {
             fail("Disk: write failed (\(String(cString: strerror(errno))))", stop: stop)
             return false
         }
-        _ = fcntl(fd, F_FULLFSYNC)
-        return !stop.isSet
+        return flush(fd: fd, stop: stop) && !stop.isSet
     }
 
     nonisolated private func writeLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
@@ -129,9 +143,7 @@ final class DiskStressEngine {
                 fail("Disk: write failed (\(String(cString: strerror(errno))))", stop: stop)
                 return
             }
-            // fsync alone leaves data in the drive's write cache; only F_FULLFSYNC
-            // makes the timing cover the trip to the flash.
-            _ = fcntl(fd, F_FULLFSYNC)
+            guard flush(fd: fd, stop: stop) else { return }
             report(bytes: written, since: startTime, stop: stop)
         }
     }

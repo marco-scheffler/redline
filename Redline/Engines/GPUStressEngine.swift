@@ -87,7 +87,10 @@ final class GPUStressEngine {
 
         while !stop.isSet {
             guard let commandBuffer = queue.makeCommandBuffer(),
-                  let encoder = commandBuffer.makeComputeCommandEncoder() else { continue }
+                  let encoder = commandBuffer.makeComputeCommandEncoder() else {
+                fail("GPU: cannot create command buffer", stop: stop)
+                return
+            }
             encoder.setComputePipelineState(pipeline)
             encoder.setBuffer(buffer, offset: 0, index: 0)
             encoder.dispatchThreadgroups(MTLSize(width: groupCount, height: 1, depth: 1),
@@ -95,6 +98,11 @@ final class GPUStressEngine {
             encoder.endEncoding()
             commandBuffer.commit()
             commandBuffer.waitUntilCompleted()
+            guard commandBuffer.status == .completed else {
+                let reason = commandBuffer.error?.localizedDescription ?? "status \(commandBuffer.status.rawValue)"
+                fail("GPU: command buffer failed (\(reason))", stop: stop)
+                return
+            }
 
             iterations += 1
             let now = Date()
