@@ -25,7 +25,7 @@ struct ContentView: View {
                       startAll: model.startAll, stopAll: model.stopAll)
         }
         .background(VisualEffectView().ignoresSafeArea())
-        .frame(minWidth: 720, minHeight: 820)
+        .frame(minWidth: 720, minHeight: 560)
     }
 }
 
