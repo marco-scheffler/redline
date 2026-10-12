@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 // MARK: - Configuration enums
 
@@ -45,16 +46,15 @@ enum DiskMode: String, CaseIterable, Identifiable {
 /// Workers poll `isSet` only once per outer batch, so lock overhead is negligible.
 /// Each run gets a fresh flag, so a worker that is slow to notice a stop can never
 /// be revived by the next start.
-final class AtomicFlag {
-    private var value = false
-    private let lock = NSLock()
+final class AtomicFlag: Sendable {
+    private let value = OSAllocatedUnfairLock(initialState: false)
 
-    func set() { lock.lock(); value = true; lock.unlock() }
-    var isSet: Bool { lock.lock(); defer { lock.unlock() }; return value }
+    func set() { value.withLock { $0 = true } }
+    var isSet: Bool { value.withLock { $0 } }
 
-    /// Runs `update` on the main queue unless this run has been stopped by then,
+    /// Runs `update` on the main actor unless this run has been stopped by then,
     /// so a finishing worker can't overwrite the state of a newer run.
-    func onMainUnlessSet(_ update: @escaping () -> Void) {
+    func onMainUnlessSet(_ update: @escaping @MainActor @Sendable () -> Void) {
         DispatchQueue.main.async { if !self.isSet { update() } }
     }
 }
@@ -62,14 +62,15 @@ final class AtomicFlag {
 // MARK: - Activity log
 
 /// Append-only, timestamped activity feed shown at the bottom of the window.
-final class ActivityLog: ObservableObject {
+@MainActor @Observable
+final class ActivityLog {
     struct Entry: Identifiable {
         let id = UUID()
         let time: String
         let message: String
     }
 
-    @Published private(set) var entries: [Entry] = []
+    private(set) var entries: [Entry] = []
 
     private let formatter: DateFormatter = {
         let f = DateFormatter()
@@ -77,10 +78,11 @@ final class ActivityLog: ObservableObject {
         return f
     }()
 
-    func log(_ message: String) {
-        let stamp = formatter.string(from: Date())
+    /// Callable from any thread; the entry is appended on the main actor.
+    nonisolated func log(_ message: String) {
+        let now = Date()
         DispatchQueue.main.async {
-            self.entries.append(Entry(time: stamp, message: message))
+            self.entries.append(Entry(time: self.formatter.string(from: now), message: message))
             if self.entries.count > 200 {
                 self.entries.removeFirst(self.entries.count - 200)
             }

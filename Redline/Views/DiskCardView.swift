@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DiskCardView: View {
-    @ObservedObject var engine: DiskStressEngine
+    @Bindable var engine: DiskStressEngine
 
     private let sizes = [256, 512, 1024, 4096]
     private func label(_ mb: Int) -> String {

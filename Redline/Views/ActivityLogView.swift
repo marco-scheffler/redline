@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ActivityLogView: View {
-    @ObservedObject var log: ActivityLog
+    let log: ActivityLog
 
     var body: some View {
         Card {

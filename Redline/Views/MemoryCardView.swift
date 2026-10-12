@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MemoryCardView: View {
-    @ObservedObject var engine: MemoryStressEngine
+    @Bindable var engine: MemoryStressEngine
 
     private var options: [Int] {
         [1, 2, 4, 8, 16, 32].filter { $0 <= engine.maxGigabytes }

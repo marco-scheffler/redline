@@ -3,12 +3,13 @@ import Darwin
 
 /// Sequential / random read & write throughput test against a temp file,
 /// bypassing the unified buffer cache with F_NOCACHE.
-final class DiskStressEngine: ObservableObject {
-    @Published private(set) var isRunning = false
-    @Published var sizeMB: Int = 1024
-    @Published var mode: DiskMode = .seqWrite
-    @Published private(set) var speedMBps: Double = 0
-    @Published private(set) var statusText = "Idle"
+@MainActor @Observable
+final class DiskStressEngine {
+    private(set) var isRunning = false
+    var sizeMB: Int = 1024
+    var mode: DiskMode = .seqWrite
+    private(set) var speedMBps: Double = 0
+    private(set) var statusText = "Idle"
 
     private let log: ActivityLog
     private var stopFlag: AtomicFlag?
@@ -55,7 +56,7 @@ final class DiskStressEngine: ObservableObject {
         log.log("Disk: stopped")
     }
 
-    private func run(sizeMB: Int, mode: DiskMode, stop: AtomicFlag) {
+    nonisolated private func run(sizeMB: Int, mode: DiskMode, stop: AtomicFlag) {
         let blockSize = 1024 * 1024
         let total = sizeMB * blockSize
 
@@ -74,7 +75,7 @@ final class DiskStressEngine: ObservableObject {
 
     /// Creates a uniquely named file and unlinks it right away: it lives only as long as
     /// the descriptor, so concurrent runs can't collide and a crash leaves nothing behind.
-    private func makeTempFile() -> Int32? {
+    nonisolated private func makeTempFile() -> Int32? {
         var template = Array(directory.appendingPathComponent("redline_disk.XXXXXX").path.utf8CString)
         let fd = mkstemp(&template)
         guard fd >= 0 else { return nil }
@@ -83,7 +84,7 @@ final class DiskStressEngine: ObservableObject {
         return fd
     }
 
-    private func prepareFile(fd: Int32, total: Int, blockSize: Int, stop: AtomicFlag) -> Bool {
+    nonisolated private func prepareFile(fd: Int32, total: Int, blockSize: Int, stop: AtomicFlag) -> Bool {
         stop.onMainUnlessSet { self.statusText = "Preparing \(total / (1024 * 1024)) MB…" }
         let data = [UInt8](repeating: 0xA5, count: blockSize)
         var written = 0
@@ -103,7 +104,7 @@ final class DiskStressEngine: ObservableObject {
         return !stop.isSet
     }
 
-    private func writeLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
+    nonisolated private func writeLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
         stop.onMainUnlessSet {
             self.statusText = "\(random ? "Random" : "Sequential") write…"
         }
@@ -135,7 +136,7 @@ final class DiskStressEngine: ObservableObject {
         }
     }
 
-    private func readLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
+    nonisolated private func readLoop(fd: Int32, total: Int, blockSize: Int, random: Bool, stop: AtomicFlag) {
         stop.onMainUnlessSet {
             self.statusText = "\(random ? "Random" : "Sequential") read…"
         }
@@ -169,7 +170,7 @@ final class DiskStressEngine: ObservableObject {
         }
     }
 
-    private func report(bytes: Int, since start: Date, stop: AtomicFlag) {
+    nonisolated private func report(bytes: Int, since start: Date, stop: AtomicFlag) {
         let elapsed = Date().timeIntervalSince(start)
         guard elapsed > 0 else { return }
         let mbps = (Double(bytes) / (1024 * 1024)) / elapsed
@@ -177,7 +178,7 @@ final class DiskStressEngine: ObservableObject {
     }
 
     /// Logs a failure and returns the card to idle, unless the run was already stopped.
-    private func fail(_ message: String, stop: AtomicFlag) {
+    nonisolated private func fail(_ message: String, stop: AtomicFlag) {
         log.log(message)
         stop.onMainUnlessSet {
             self.isRunning = false

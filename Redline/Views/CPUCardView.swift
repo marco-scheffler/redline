@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CPUCardView: View {
-    @ObservedObject var engine: CPUStressEngine
+    @Bindable var engine: CPUStressEngine
 
     var body: some View {
         Card {
