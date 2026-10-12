@@ -74,9 +74,14 @@ Watch the per-core grid and the CPU / memory / swap gauges to see the impact as 
 
 ## Requirements
 
-- macOS 14 (Sonoma) or later — built with the macOS 26 SDK, runs through macOS 26
+- macOS 14 (Sonoma) or later (deployment minimum)
 - Apple Silicon
-- Xcode 26+ to build from source (includes the Metal toolchain component)
+- Xcode 26+ to build from source, with the Metal Toolchain component installed
+  (download it separately in Xcode → Settings → Components if needed)
+
+**macOS 27 / Xcode 27:** builds cleanly with Xcode 27 and runs on macOS 27, including
+the v1.0.0 and v1.1.0 releases. Running an Xcode 27 build on macOS 14 is not yet
+verified. See the [compatibility review](docs/macos-27-compatibility.md) for details.
 
 ## Notes
 
