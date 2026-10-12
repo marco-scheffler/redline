@@ -2,12 +2,13 @@ import Foundation
 import Darwin
 
 /// Allocates a chosen amount of RAM and keeps touching it so it stays resident.
-final class MemoryStressEngine: ObservableObject {
-    @Published private(set) var isRunning = false
-    @Published var gigabytes: Int = 4
-    @Published private(set) var allocatedMB: Int = 0
-    @Published private(set) var targetMB: Int = 0
-    @Published private(set) var statusText = "Idle"
+@MainActor @Observable
+final class MemoryStressEngine {
+    private(set) var isRunning = false
+    var gigabytes: Int = 4
+    private(set) var allocatedMB: Int = 0
+    private(set) var targetMB: Int = 0
+    private(set) var statusText = "Idle"
 
     let maxGigabytes: Int
     private let log: ActivityLog
@@ -54,7 +55,7 @@ final class MemoryStressEngine: ObservableObject {
         log.log("RAM: released")
     }
 
-    private func run(targetMB: Int, stop: AtomicFlag) {
+    nonisolated private func run(targetMB: Int, stop: AtomicFlag) {
         let chunk = 64 * 1024 * 1024
         let targetBytes = targetMB * 1024 * 1024
         let pageSize = Int(getpagesize())

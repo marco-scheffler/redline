@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GPUCardView: View {
-    @ObservedObject var engine: GPUStressEngine
+    @Bindable var engine: GPUStressEngine
 
     private let buffers = [64, 128, 256, 512, 1024]
 

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var model: AppModel
+    @Environment(AppModel.self) private var model
 
     var body: some View {
         VStack(spacing: 0) {
@@ -32,10 +32,10 @@ struct ContentView: View {
 /// Bottom action bar: a single toggle that runs every test while idle and
 /// stops every running test once anything is active.
 private struct BottomBar: View {
-    @ObservedObject var cpu: CPUStressEngine
-    @ObservedObject var gpu: GPUStressEngine
-    @ObservedObject var memory: MemoryStressEngine
-    @ObservedObject var disk: DiskStressEngine
+    let cpu: CPUStressEngine
+    let gpu: GPUStressEngine
+    let memory: MemoryStressEngine
+    let disk: DiskStressEngine
     let startAll: () -> Void
     let stopAll: () -> Void
 

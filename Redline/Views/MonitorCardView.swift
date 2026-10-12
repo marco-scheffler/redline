@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MonitorCardView: View {
-    @ObservedObject var monitor: SystemMonitor
+    let monitor: SystemMonitor
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 4)
 

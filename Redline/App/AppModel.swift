@@ -2,7 +2,8 @@ import Foundation
 
 /// Owns the system info, the four stress engines, the monitor and the log.
 /// Created once and shared through the environment.
-final class AppModel: ObservableObject {
+@MainActor @Observable
+final class AppModel {
     let info = SystemInfo.current()
     let log = ActivityLog()
     let monitor: SystemMonitor

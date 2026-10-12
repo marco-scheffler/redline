@@ -2,12 +2,13 @@ import Foundation
 import Metal
 
 /// Drives the GPU with a heavy Metal compute kernel in a tight dispatch loop.
-final class GPUStressEngine: ObservableObject {
-    @Published private(set) var isRunning = false
-    @Published var bufferMB: Int = 256
-    @Published private(set) var iterationsPerSecond: Double = 0
-    @Published private(set) var gpuName: String = ""
-    @Published private(set) var statusText = "Idle"
+@MainActor @Observable
+final class GPUStressEngine {
+    private(set) var isRunning = false
+    var bufferMB: Int = 256
+    private(set) var iterationsPerSecond: Double = 0
+    private(set) var gpuName: String = ""
+    private(set) var statusText = "Idle"
 
     private let log: ActivityLog
     private var stopFlag: AtomicFlag?
@@ -48,7 +49,7 @@ final class GPUStressEngine: ObservableObject {
         log.log("GPU: stopped")
     }
 
-    private func run(device: MTLDevice, bufferMB: Int, stop: AtomicFlag) {
+    nonisolated private func run(device: MTLDevice, bufferMB: Int, stop: AtomicFlag) {
         guard let queue = device.makeCommandQueue(),
               let library = device.makeDefaultLibrary(),
               let function = library.makeFunction(name: "stress"),
@@ -110,7 +111,7 @@ final class GPUStressEngine: ObservableObject {
         }
     }
 
-    private func fail(_ message: String, stop: AtomicFlag) {
+    nonisolated private func fail(_ message: String, stop: AtomicFlag) {
         log.log(message)
         stop.onMainUnlessSet { self.isRunning = false; self.statusText = "Idle" }
     }
